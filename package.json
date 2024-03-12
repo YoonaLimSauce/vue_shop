@@ -32,5 +32,8 @@
     "less-loader": "^4.1.0",
     "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.14"
+  },
+  "rules": {
+    "indent": ["error", 4]
   }
 }
