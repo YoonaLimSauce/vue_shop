@@ -15,7 +15,7 @@
 <script>
 export default {
   methods: {
-    logout () {
+    logout() {
       this.$message.success('退出成功！')
       window.sessionStorage.clear()
       // this.$router.push('/login')
