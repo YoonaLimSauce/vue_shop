@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: 林允儿 Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-16 00:49:49
+ * @LastEditTime: 2024-03-16 01:27:08
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -60,12 +60,27 @@
 
 <script>
 export default {
+  data() {
+    return {
+      // 侧边栏菜单数据
+      menuList: []
+    }
+  },
+  created() {
+    this.getMenuList()
+  },
   methods: {
     logout() {
       this.$message.success('退出成功！')
       window.sessionStorage.clear()
       // this.$router.push('/login')
       this.$router.replace('/login')
+    },
+    async getMenuList() {
+      const { data: res } = await this.$http.get('menus')
+      console.log(res)
+      if (res.meta.status !== 200) return this.$message.error('获取菜单列表失败！')
+      this.menuList = res.data
     }
   }
 }
