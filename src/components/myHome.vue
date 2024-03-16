@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-16 12:08:17
+ * @LastEditTime: 2024-03-17 00:36:22
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -52,7 +52,8 @@
       </el-aside>
       <el-main>
         <!-- 这里是首页的主要内容-->
-        Main
+        <!-- 路由占位符 -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
