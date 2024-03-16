@@ -1,8 +1,8 @@
 <!--
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
- * @LastEditors: 林允儿 Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-16 07:37:53
+ * @LastEditors: Yoona Lim miraclefishleong@gmail.com
+ * @LastEditTime: 2024-03-16 08:46:13
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -34,7 +34,7 @@
             <!-- 一级菜单模板区域-->
             <template slot="title">
               <!-- 图标 -->
-              <i class="el-icon-location"></i>
+              <i :class="iconsObj[item.id]"></i>
               <!-- 文字 -->
               <span>{{ item.authName }}</span>
             </template>
@@ -42,7 +42,7 @@
             <el-menu-item :index="subItem.id.toString()" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <!-- 图标 -->
-                <i class="el-icon-location"></i>
+                <i class="el-icon-menu"></i>
                 <!-- 文字 -->
                 <span>{{ subItem.authName }}</span>
               </template>
@@ -63,7 +63,8 @@ export default {
   data() {
     return {
       // 侧边栏菜单数据
-      menuList: []
+      menuList: [],
+      iconsObj: {}
     }
   },
   created() {
@@ -80,7 +81,10 @@ export default {
       const { data: res } = await this.$http.get('menus')
       if (res.meta.status !== 200) return this.$message.error('获取菜单列表失败！')
       this.menuList = res.data
-      console.log(this.menuList)
+      const iconsList = ['user', 'tijikongjian', 'shangpin', 'danju', 'baobiao']
+      for (let i = 0; i < res.data.length; ++i) {
+        this.iconsObj[res.data[i].id] = 'iconfont icon-' + iconsList[i]
+      }
     }
   }
 }
@@ -111,5 +115,8 @@ export default {
   }
   .el-main {
     background-color: #eaedf1;
+  }
+  .iconfont {
+    margin-right: 10px;
   }
 </style>

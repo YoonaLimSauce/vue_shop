@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4453656 */
-  src: url('iconfont.woff2?t=1710245170482') format('woff2'),
-       url('iconfont.woff?t=1710245170482') format('woff'),
-       url('iconfont.ttf?t=1710245170482') format('truetype');
+  src: url('iconfont.woff2?t=1710549109249') format('woff2'),
+       url('iconfont.woff?t=1710549109249') format('woff'),
+       url('iconfont.ttf?t=1710549109249') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,70 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shangpin:before {
+  content: "\e654";
+}
+
+.icon-danju:before {
+  content: "\e89b";
+}
+
+.icon-chuangjiandanju:before {
+  content: "\e89d";
+}
+
+.icon-tijikongjian:before {
+  content: "\e89f";
+}
+
+.icon-baobiao:before {
+  content: "\e902";
+}
+
+.icon-danju-tianchong:before {
+  content: "\e62a";
+}
+
+.icon-shangpin1:before {
+  content: "\e64f";
+}
+
+.icon-shangpinchuangjian:before {
+  content: "\e61e";
+}
+
+.icon-tijikongjian1:before {
+  content: "\e7dc";
+}
+
+.icon-danju1:before {
+  content: "\e607";
+}
+
+.icon-tijikongjian2:before {
+  content: "\e61d";
+}
+
+.icon-tijikongjian3:before {
+  content: "\e616";
+}
+
+.icon-tijikongjian4:before {
+  content: "\e660";
+}
+
+.icon-baobiao1:before {
+  content: "\e604";
+}
+
+.icon-tijikongjian5:before {
+  content: "\e600";
+}
+
+.icon-tijikongjian6:before {
+  content: "\e621";
 }
 
 .icon-user:before {
