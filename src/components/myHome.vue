@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-17 00:36:22
+ * @LastEditTime: 2024-03-17 00:42:47
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -28,7 +28,8 @@
         <div class="toggle-button" @click="toggleCollapse">|||</div>
         <el-menu
         background-color="#333744" text-color="#fff" active-text-color="#409eff"
-        :unique-opened="true" :collapse="isCollapse" :collapse-transition="false">
+        :unique-opened="true" :collapse="isCollapse" :collapse-transition="false"
+        :router="true">
           <!-- 一级菜单 -->
           <el-submenu :index="item.id.toString()" v-for="item in menuList" :key="item.id">
             <!-- 一级菜单模板区域-->
@@ -39,7 +40,7 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="subItem.id.toString()" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="subItem.path.toString()" v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
