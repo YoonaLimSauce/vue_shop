@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-16 10:27:09
+ * @LastEditTime: 2024-03-16 12:08:17
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -23,11 +23,12 @@
     <!-- 这里是首页的主体-->
     <el-container>
       <!-- 这里是首页的侧边栏-->
-      <el-aside width="200px">
+      <el-aside :width="isCollapse ? '64px' : '200px'">
         <!-- 这里是首页的侧边栏内容-->
+        <div class="toggle-button" @click="toggleCollapse">|||</div>
         <el-menu
-          background-color="#333744" text-color="#fff" active-text-color="#409eff"
-          :unique-opened="true">
+        background-color="#333744" text-color="#fff" active-text-color="#409eff"
+        :unique-opened="true" :collapse="isCollapse" :collapse-transition="false">
           <!-- 一级菜单 -->
           <el-submenu :index="item.id.toString()" v-for="item in menuList" :key="item.id">
             <!-- 一级菜单模板区域-->
@@ -63,7 +64,8 @@ export default {
     return {
       // 侧边栏菜单数据
       menuList: [],
-      iconsObj: {}
+      iconsObj: {},
+      isCollapse: false
     }
   },
   created() {
@@ -78,12 +80,19 @@ export default {
     },
     async getMenuList() {
       const { data: res } = await this.$http.get('menus')
-      if (res.meta.status !== 200) return this.$message.error('获取菜单列表失败！')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取菜单列表失败！')
+      }
       this.menuList = res.data
+      console.log(res.data[0])
+      debugger
       const iconsList = ['user', 'tijikongjian', 'shangpin', 'danju', 'baobiao']
-      for (let i = 0; i < res.data.length < (iconsList.length ? res.data.length : iconsList.length); ++i) {
+      for (let i = 0; i < res.data.length; ++i) {
         this.iconsObj[res.data[i].id] = 'iconfont icon-' + iconsList[i]
       }
+    },
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse
     }
   }
 }
@@ -120,5 +129,15 @@ export default {
   }
   .iconfont {
     margin-right: 10px;
+  }
+  .toggle-button {
+    background-color: #4a5064;
+    height: 24px;
+    font-size: 16px;
+    color: white;
+    letter-spacing: 0.2em;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
   }
 </style>
