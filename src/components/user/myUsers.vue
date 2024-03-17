@@ -12,9 +12,7 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search">
-              总想要写点什么
-            </el-button>
+            <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
@@ -23,6 +21,14 @@
           </el-button>
         </el-col>
       </el-row>
+      <el-table :data="userList" border stripe>
+        <el-table-column label="姓名" prop="username"></el-table-column>
+        <el-table-column label="邮箱" prop="email"></el-table-column>
+        <el-table-column label="电话" prop="mobile"></el-table-column>
+        <el-table-column label="角色" prop="role_name"></el-table-column>
+        <el-table-column label="状态" prop="mg_state"></el-table-column>
+        <el-table-column label="操作"></el-table-column>
+      </el-table>
     </el-card>
   </div>
 </template>
@@ -51,8 +57,9 @@ export default {
       if (result.meta.status !== 200) {
         return this.$message.error('获取用户列表失败！')
       }
-      this.userList = result.data.list // 获取用户列表
+      this.userList = result.data.users // 获取用户列表
       this.total = result.data.total // 获取用户总数
+      console.log('userList:\n', this.userList)
     }
   },
   created() {
