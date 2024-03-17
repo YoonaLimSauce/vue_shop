@@ -8,6 +8,6 @@
 -->
 <template>
     <div>
-        Welcome
+        <h3>Welcome</h3>
     </div>
 </template>
