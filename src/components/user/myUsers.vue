@@ -22,6 +22,7 @@
         </el-col>
       </el-row>
       <el-table :data="userList" border stripe>
+        <el-table-column type="index" label="序号"> </el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
         <el-table-column label="电话" prop="mobile"></el-table-column>
