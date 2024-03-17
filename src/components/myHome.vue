@@ -26,10 +26,14 @@
       <el-aside :width="isCollapse ? '64px' : '200px'">
         <!-- 这里是首页的侧边栏内容-->
         <div class="toggle-button" @click="toggleCollapse">|||</div>
+        <!-- <el-menu
+        background-color="#333744" text-color="#fff" active-text-color="#409eff"
+        :unique-opened="true" :collapse="isCollapse" :collapse-transition="false"
+        :router="true" :default-active="activePath"> -->
         <el-menu
         background-color="#333744" text-color="#fff" active-text-color="#409eff"
         :unique-opened="true" :collapse="isCollapse" :collapse-transition="false"
-        :router="true" :default-active="activePath">
+        :router="true" :default-active="$route.path">
           <!-- 一级菜单 -->
           <el-submenu :index="item.id.toString()"
             v-for="item in menuList" :key="item.id">
@@ -76,7 +80,7 @@ export default {
   },
   created() {
     this.getMenuList()
-    this.activePath = window.sessionStorage.getItem('activePath')
+    // this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -100,11 +104,11 @@ export default {
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
-    },
-    SaveNavState(activePath) {
-      window.sessionStorage.setItem('activePath', activePath)
-      this.activePath = activePath
     }
+    // SaveNavState(activePath) {
+    //   window.sessionStorage.setItem('activePath', activePath)
+    //   this.activePath = activePath
+    // }
   }
 }
 </script>
