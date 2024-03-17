@@ -7,7 +7,6 @@
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
-
     <!-- 卡片视图区 -->
     <el-card class="box-card">
       <el-row :gutter="20">
@@ -30,15 +29,34 @@
 
 <script>
 export default {
-  componentName: '',
   // Component data, props, methods, etc, go here
   data() {
     return {
       // Data properties go here
+      queryInfo: {
+        query: '',
+        pagenum: 1,
+        pagesize: 2
+      },
+      userList: [],
+      total: 0
     }
   },
   methods: {
     // Component methods go here
+    async getUserList() {
+      const { data: result } = await this.$http.get('users', {
+        params: this.queryInfo
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取用户列表失败！')
+      }
+      this.userList = result.data.list // 获取用户列表
+      this.total = result.data.total // 获取用户总数
+    }
+  },
+  created() {
+    this.getUserList()
   }
 }
 </script>
