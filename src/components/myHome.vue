@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-17 00:53:24
+ * @LastEditTime: 2024-03-17 18:25:51
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,9 +29,10 @@
         <el-menu
         background-color="#333744" text-color="#fff" active-text-color="#409eff"
         :unique-opened="true" :collapse="isCollapse" :collapse-transition="false"
-        :router="true">
+        :router="true" :default-active="activePath">
           <!-- 一级菜单 -->
-          <el-submenu :index="item.id.toString()" v-for="item in menuList" :key="item.id">
+          <el-submenu :index="item.id.toString()"
+            v-for="item in menuList" :key="item.id">
             <!-- 一级菜单模板区域-->
             <template slot="title">
               <!-- 图标 -->
@@ -40,7 +41,9 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="'/' + subItem.path.toString()" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="'/' + subItem.path.toString()"
+              v-for="subItem in item.children" :key="subItem.id"
+              @click="SaveNavState('/' + subItem.path.toString())">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
@@ -67,11 +70,13 @@ export default {
       // 侧边栏菜单数据
       menuList: [],
       iconsObj: {},
-      isCollapse: false
+      isCollapse: false,
+      activePath: ''
     }
   },
   created() {
     this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout() {
@@ -95,6 +100,10 @@ export default {
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
+    },
+    SaveNavState(activePath) {
+      window.sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   }
 }
