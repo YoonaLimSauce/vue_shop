@@ -46,6 +46,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页区 -->
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[1, 2, 5, 10]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -77,6 +88,14 @@ export default {
       this.userList = result.data.users // 获取用户列表
       this.total = result.data.total // 获取用户总数
       console.log('userList:\n', this.userList)
+    },
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getUserList()
+    },
+    handleCurrentChange(newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getUserList()
     }
   },
   created() {

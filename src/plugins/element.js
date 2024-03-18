@@ -2,7 +2,7 @@
  * @Author: 林允儿 Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-13 22:00:29
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-19 00:13:20
+ * @LastEditTime: 2024-03-19 00:43:41
  * @FilePath: \vue_shop\src\plugins\element.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,7 +11,7 @@ import {
   Button, Form, FormItem, Input, Message,
   Container, Header, Aside, Main, Footer, Menu, Submenu, MenuItem, MenuItemGroup,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn,
-  Switch, Tooltip
+  Switch, Tooltip, Pagination
 } from 'element-ui'
 
 Vue.use(Button)
@@ -36,5 +36,6 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Switch)
 Vue.use(Tooltip)
+Vue.use(Pagination)
 
 Vue.prototype.$message = Message
