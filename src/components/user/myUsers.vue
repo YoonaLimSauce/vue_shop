@@ -16,8 +16,8 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" icon="el-icon-plus">
-            填加用户
+          <el-button type="primary" icon="el-icon-plus" @click="addDialogVisible = true">
+            添加用户
           </el-button>
         </el-col>
       </el-row>
@@ -58,6 +58,16 @@
         :total="total">
       </el-pagination>
     </el-card>
+    <el-dialog
+      title="提示"
+      :visible.sync="addDialogVisible"
+      width="50%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -73,7 +83,8 @@ export default {
         pagesize: 2
       },
       userList: [],
-      total: 0
+      total: 0,
+      addDialogVisible: false
     }
   },
   methods: {
@@ -88,14 +99,6 @@ export default {
       this.userList = result.data.users // 获取用户列表
       this.total = result.data.total // 获取用户总数
     },
-    handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
-      this.getUserList()
-    },
-    handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage
-      this.getUserList()
-    },
     async userStateChange(userInfo) {
       const { data: result } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
       if (result.meta.status !== 200) {
@@ -103,6 +106,14 @@ export default {
         return this.$message.error('修改用户状态失败！')
       }
       this.$message.success('修改用户状态成功！')
+    },
+    handleCurrentChange(newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getUserList()
+    },
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getUserList()
     }
   },
   created() {
