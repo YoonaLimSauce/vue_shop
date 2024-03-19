@@ -144,12 +144,20 @@ export default {
             required: true,
             message: '请输入邮箱',
             trigger: 'blur'
+          },
+          {
+            validator: this.checkEmail,
+            trigger: 'blur'
           }
         ],
         mobile: [
           {
             required: true,
             message: '请输入电话',
+            trigger: 'blur'
+          },
+          {
+            validator: this.checkMobile,
             trigger: 'blur'
           }
         ]
@@ -182,6 +190,26 @@ export default {
         password: '',
         email: '',
         mobile: ''
+      }
+    },
+    /* 验证邮箱规则 */
+    checkEmail(rule, value, callback) {
+      const regEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/
+
+      if (regEmail.test(value)) {
+        return callback()
+      } else {
+        return callback(new Error('请输入正确的邮箱'))
+      }
+    },
+    /* 验证电话规则 */
+    checkMobile(rule, value, callback) {
+      const regMobile = /^1[34578]\d{9}$/
+
+      if (regMobile.test(value)) {
+        return callback()
+      } else {
+        return callback(new Error('请输入正确的电话'))
       }
     },
     handleCurrentChange(newPage) {
