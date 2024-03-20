@@ -62,7 +62,7 @@
     <el-dialog
       title="添加用户"
       :visible.sync="addDialogVisible"
-      :before-close="addHandleClose"
+      @close="addDialogClosed"
       width="50%">
       <!-- 表单区 -->
       <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="80px">
@@ -95,6 +95,7 @@
 <script>
 export default {
   // Component data, props, methods, etc, go here
+  /* 组件数据 */
   data() {
     return {
       // Data properties go here
@@ -164,8 +165,10 @@ export default {
       }
     }
   },
+  /* 组件方法 */
   methods: {
     // Component methods go here
+    /* 获取用户列表 */
     async getUserList() {
       const { data: result } = await this.$http.get('users', {
         params: this.queryInfo
@@ -176,6 +179,7 @@ export default {
       this.userList = result.data.users // 获取用户列表
       this.total = result.data.total // 获取用户总数
     },
+    /* 修改用户状态 */
     async userStateChange(userInfo) {
       const { data: result } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
       if (result.meta.status !== 200) {
@@ -184,13 +188,9 @@ export default {
       }
       this.$message.success('修改用户状态成功！')
     },
-    addHandleClose() {
-      this.addForm = {
-        username: '',
-        password: '',
-        email: '',
-        mobile: ''
-      }
+    /* 添加用户对话框关闭事件 */
+    addDialogClosed() {
+      this.$refs.addFormRef.resetFields()
     },
     /* 验证邮箱规则 */
     checkEmail(rule, value, callback) {
@@ -212,15 +212,18 @@ export default {
         return callback(new Error('请输入正确的电话'))
       }
     },
+    /* 分页改变事件 */
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage
       this.getUserList()
     },
+    /* 每页显示条数改变事件 */
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getUserList()
     }
   },
+  /* 组件创建完成后获取用户列表 */
   created() {
     this.getUserList()
   }
