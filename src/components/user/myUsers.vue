@@ -86,7 +86,7 @@
       <!-- 底部按钮区 -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addUser">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -191,6 +191,19 @@ export default {
     /* 添加用户对话框关闭事件 */
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
+    },
+    /* 添加用户 */
+    addUser() {
+      this.$refs.addFormRef.validate(async valid => {
+        if (!valid) return
+        const { data: result } = await this.$http.post('users', this.addForm)
+        if (result.meta.status !== 201) {
+          return this.$message.error('添加用户失败！')
+        }
+        this.$message.success('添加用户成功！')
+        this.addDialogVisible = false
+        this.getUserList()
+      })
     },
     /* 验证邮箱规则 */
     checkEmail(rule, value, callback) {
