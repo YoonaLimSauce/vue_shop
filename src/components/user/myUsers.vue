@@ -111,7 +111,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -281,6 +281,20 @@ export default {
     /* 重置修改用户对话框 */
     editDialogClosed() {
       this.$refs.editFormRef.resetFields()
+    },
+    /* 预校验修改用户信息 */
+    editUserInfo() {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) return
+        /* 发起用户信息修改请求 */
+        const { data: result } = await this.$http.put(`users/${this.editForm.id}`, this.editForm)
+        if (result.meta.status !== 200) {
+          return this.$message.error('修改用户信息失败！')
+        }
+        this.$message.success('修改用户信息成功！')
+        this.editDialogVisible = false
+        this.getUserList()
+      })
     },
     /* 分页改变事件 */
     handleCurrentChange(newPage) {
