@@ -287,7 +287,10 @@ export default {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return
         /* 发起用户信息修改请求 */
-        const { data: result } = await this.$http.put(`users/${this.editForm.id}`, this.editForm)
+        const { data: result } = await this.$http.put('users/' + this.editForm.id, {
+          email: this.editForm.email,
+          mobile: this.editForm.mobile
+        })
         if (result.meta.status !== 200) {
           return this.$message.error('修改用户信息失败！')
         }
