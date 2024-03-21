@@ -96,6 +96,7 @@
     <el-dialog
       title="修改用户"
       :visible.sync="editDialogVisible"
+      @close="editDialogClosed"
       width="50%">
       <el-form ref="editFormRef" :model="editForm" :rules="editFormRules" label-width="80px">
         <el-form-item label="用户名" prop="username">
@@ -276,6 +277,10 @@ export default {
       } else {
         return callback(new Error('请输入正确的电话'))
       }
+    },
+    /* 重置修改用户对话框 */
+    editDialogClosed() {
+      this.$refs.editFormRef.resetFields()
     },
     /* 分页改变事件 */
     handleCurrentChange(newPage) {
