@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-17 18:25:51
+ * @LastEditTime: 2024-03-21 20:13:40
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -45,9 +45,11 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item :index="'/' + subItem.path.toString()"
+            <!-- <el-menu-item :index="'/' + subItem.path.toString()"
               v-for="subItem in item.children" :key="subItem.id"
-              @click="SaveNavState('/' + subItem.path.toString())">
+              @click="SaveNavState('/' + subItem.path.toString())"> -->
+            <el-menu-item :index="'/' + subItem.path.toString()"
+              v-for="subItem in item.children" :key="subItem.id">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
@@ -95,8 +97,6 @@ export default {
         return this.$message.error('获取菜单列表失败！')
       }
       this.menuList = res.data
-      console.log(res.data[0])
-      debugger
       const iconsList = ['user', 'tijikongjian', 'shangpin', 'danju', 'baobiao']
       for (let i = 0; i < res.data.length; ++i) {
         this.iconsObj[res.data[i].id] = 'iconfont icon-' + iconsList[i]

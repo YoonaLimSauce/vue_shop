@@ -33,10 +33,10 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="180">
-          <template slot-scope="">
+          <template slot-scope="scope">
             <!-- 编辑按钮 -->
             <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog"></el-button>
+              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
             </el-tooltip>
             <!-- 删除按钮 -->
             <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
@@ -95,12 +95,12 @@
     <!-- 修改用户对话框 -->
     <el-dialog
       title="修改用户"
-      :visible.sync="EditDialogVisible"
+      :visible.sync="editDialogVisible"
       width="50%">
       <span>这是一段信息</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="EditDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="EditDialogVisible = false">确 定</el-button>
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -177,7 +177,8 @@ export default {
           }
         ]
       },
-      EditDialogVisible: false
+      editDialogVisible: false,
+      editForm: {}
     }
   },
   /* 组件方法 */
@@ -250,8 +251,13 @@ export default {
       this.queryInfo.pagesize = newSize
       this.getUserList()
     },
-    showEditDialog() {
-      this.EditDialogVisible = true
+    async showEditDialog(id) {
+      const { data: result } = await this.$http.get('users/' + id)
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取用户信息失败！')
+      }
+      this.editForm = result.data // 获取用户信息
+      this.editDialogVisible = true
     }
   },
   /* 组件创建完成后获取用户列表 */
