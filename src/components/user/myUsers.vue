@@ -97,7 +97,17 @@
       title="修改用户"
       :visible.sync="editDialogVisible"
       width="50%">
-      <span>这是一段信息</span>
+      <el-form ref="editFormRef" :model="editForm" :rules="editFormRules" label-width="80px">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="editForm.username" placeholder="请输入用户名" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="editForm.email" placeholder="请输入邮箱"></el-input>
+        </el-form-item>
+        <el-form-item label="用户名" prop="mobile">
+          <el-input v-model="editForm.mobile" placeholder="请输入手机号"></el-input>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
@@ -178,7 +188,35 @@ export default {
         ]
       },
       editDialogVisible: false,
-      editForm: {}
+      editForm: {
+        username: '',
+        email: '',
+        mobile: ''
+      },
+      editFormRules: {
+        email: [
+          {
+            required: true,
+            message: '请输入邮箱',
+            trigger: 'blur'
+          },
+          {
+            validator: this.checkEmail,
+            trigger: 'blur'
+          }
+        ],
+        mobile: [
+          {
+            required: true,
+            message: '请输入手机号',
+            trigger: 'blur'
+          },
+          {
+            validator: this.checkMobile,
+            trigger: 'blur'
+          }
+        ]
+      }
     }
   },
   /* 组件方法 */
@@ -224,7 +262,6 @@ export default {
     /* 验证邮箱规则 */
     checkEmail(rule, value, callback) {
       const regEmail = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/
-
       if (regEmail.test(value)) {
         return callback()
       } else {
@@ -234,7 +271,6 @@ export default {
     /* 验证电话规则 */
     checkMobile(rule, value, callback) {
       const regMobile = /^1[34578]\d{9}$/
-
       if (regMobile.test(value)) {
         return callback()
       } else {
