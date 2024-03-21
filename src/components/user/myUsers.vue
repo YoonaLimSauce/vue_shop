@@ -34,12 +34,15 @@
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="">
+            <!-- 编辑按钮 -->
             <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-              <el-button type="primary" icon="el-icon-edit" size="mini" @click="EditDialogVisible = true"></el-button>
+              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog"></el-button>
             </el-tooltip>
+            <!-- 删除按钮 -->
             <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
               <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
             </el-tooltip>
+            <!-- 设置按钮 -->
             <el-tooltip effect="dark" content="设置" placement="top" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
             </el-tooltip>
@@ -89,14 +92,15 @@
         <el-button type="primary" @click="addUser">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 修改用户对话框 -->
     <el-dialog
-      title="添加用户"
+      title="修改用户"
       :visible.sync="EditDialogVisible"
       width="50%">
       <span>这是一段信息</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="EditDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="EditDialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -245,6 +249,9 @@ export default {
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getUserList()
+    },
+    showEditDialog() {
+      this.EditDialogVisible = true
     }
   },
   /* 组件创建完成后获取用户列表 */
