@@ -40,7 +40,7 @@
             </el-tooltip>
             <!-- 删除按钮 -->
             <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+              <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
             </el-tooltip>
             <!-- 设置按钮 -->
             <el-tooltip effect="dark" content="设置" placement="top" :enterable="false">
@@ -242,6 +242,25 @@ export default {
         return this.$message.error('修改用户状态失败！')
       }
       this.$message.success('修改用户状态成功！')
+    },
+    async removeUserById(id) {
+      const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(
+        (err) => {
+          return err
+        })
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('取消删除用户')
+      }
+      const { data: result } = await this.$http.delete('users/' + id)
+      if (result.meta.status !== 200) {
+        return this.$message.error('删除用户失败！')
+      }
+      this.$message.success('删除用户成功！')
+      this.getUserList()
     },
     /* 添加用户对话框关闭事件 */
     addDialogClosed() {
