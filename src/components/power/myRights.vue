@@ -19,7 +19,24 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      rightsList: []
+    }
+  },
+  created() {
+    this.getRightsList()
+  },
+  methods: {
+    async getRightsList() {
+      // 获取权限列表
+      const { data: result } = await this.$http.get('/rights/list')
+      if (result.meta.status !== 200) {
+        return this.$message.error(result.meta.message)
+      }
+      this.rightsList = result.data
+    }
+  }
 }
 </script>
 
