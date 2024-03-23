@@ -1,0 +1,338 @@
+[33mcommit 265e49e57fc35fd91259e95bf2efa4299d026998[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrights[m[33m, [m[1;31morigin/rights[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 24 00:15:14 2024 +0800
+
+    v-for循环配置tag显示一级权限
+
+[33mcommit 1e1e3fde91a5a9ba99b3cc5dc932fff1e92d4ab5[m[33m ([m[1;33mtag: [m[1;33mv5.3[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 23:50:20 2024 +0800
+
+    获取下拉列表数据通过template插槽引入数据变量
+
+[33mcommit cf7c44a7472ae6ffb12734a8000094f769fbb608[m[33m ([m[1;33mtag: [m[1;33mv5.2[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 23:19:57 2024 +0800
+
+    创建角色列表表格并添加展开列
+
+[33mcommit f2414e257213a58397db555971679d7f6b8f0c46[m[33m ([m[1;33mtag: [m[1;33mv5.1[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 15:18:16 2024 +0800
+
+    使用数据库接口获取RolesList对应的数据
+
+[33mcommit 06bed6d2c45cb8e6e1d8ca6f927a057199894b3c[m[33m ([m[1;33mtag: [m[1;33mv5.0[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 12:46:41 2024 +0800
+
+    创建显示角色列表的页面并进行路由设置
+
+[33mcommit cf754ff106dd51dc83fcaf5354fb268fae48ad3c[m[33m ([m[1;33mtag: [m[1;33mv4.9[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 12:14:14 2024 +0800
+
+    显示权限列表对接数据库接口使用Tag标签显示
+
+[33mcommit e0a9bd34803dee09e8e43a91df262695d26c5062[m[33m ([m[1;33mtag: [m[1;33mv4.8[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 11:59:49 2024 +0800
+
+    创建用户权限界面并绑定获取用户权限列表接口
+
+[33mcommit 4780cf6ec859f83ecc64557a7f2916f292746504[m[33m ([m[1;33mtag: [m[1;33mv4.7[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 09:39:35 2024 +0800
+
+    创建面包屑导航及卡片视图
+
+[33mcommit 3208930f6d59280034b72ac74207a4823eaf0d29[m[33m ([m[1;33mtag: [m[1;33mv4.6[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 09:34:14 2024 +0800
+
+    创建用户权限组件界面并通过路由挂载到home主页面的子页面中
+
+[33mcommit 924c6a1aa6bd129012da8d5482c2aabe63986ffd[m[33m ([m[1;33mtag: [m[1;33mv4.5[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/login[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m, [m[1;32mlogin[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 23 00:57:53 2024 +0800
+
+    完成删除按钮绑定数据库删除接口同时删除进行message弹窗提示
+
+[33mcommit 1170d16ac8eb61cf390430fe025469b9de032590[m[33m ([m[1;33mtag: [m[1;33mv4.4[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 21:36:25 2024 +0800
+
+    修改用户信息，调用数据库接口，同步用户数据
+
+[33mcommit 2bcac78b7074c68eacb98e20a2b6775ea11b40b3[m[33m ([m[1;33mtag: [m[1;33mv4.3[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 20:50:15 2024 +0800
+
+    预校验并发起修改用户数据请求
+
+[33mcommit dd0f305724a29aefe2cc465dcb7988b0e80d4f5c[m[33m ([m[1;33mtag: [m[1;33mv4.2[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 20:46:45 2024 +0800
+
+    调用
+
+[33mcommit 9033c58727740aa9611cac1dc78df4f4151925ee[m[33m ([m[1;33mtag: [m[1;33mv4.1[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 20:39:49 2024 +0800
+
+    绘制用户修改表单，默认为数据库的用户数据
+
+[33mcommit 38294cf5fd80b21b55fc8432e448b8da1bb929f6[m[33m ([m[1;33mtag: [m[1;33mv4.0[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 20:14:49 2024 +0800
+
+    获取插槽数据并请求数据库获取对应用户数据
+
+[33mcommit a7aee70d34db8afd92b283f0db68cdb6c350bd46[m[33m ([m[1;33mtag: [m[1;33mv3.9[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 20:02:49 2024 +0800
+
+    添加用户修改操作的对话框
+
+[33mcommit 3e80f94ec1a7378669078594bda50949e73beb53[m[33m ([m[1;33mtag: [m[1;33mv3.8[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 21 00:54:35 2024 +0800
+
+    实现用户编辑按钮响应弹窗操作
+
+[33mcommit b9437da0d80cd1b06382a06a76226456e6a74c35[m[33m ([m[1;33mtag: [m[1;33mv3.7[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Wed Mar 20 21:45:35 2024 +0800
+
+    实现添加用户
+
+[33mcommit b732f3aa45f3d46202dfdba9d9d9e59c7416c3ba[m[33m ([m[1;33mtag: [m[1;33mv3.6[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Wed Mar 20 20:00:49 2024 +0800
+
+    实现添加用户表单的重置功能
+
+[33mcommit c5b1a2f5b8a79320d93eb52d29acb046f1c3e563[m[33m ([m[1;33mtag: [m[1;33mv3.5[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Wed Mar 20 00:56:27 2024 +0800
+
+    使用正则表达式进行校验，自定义校验规则
+
+[33mcommit b337a0312a7d91eb11eb444cef7677a7b4e85821[m[33m ([m[1;33mtag: [m[1;33mv3.4[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Wed Mar 20 00:38:53 2024 +0800
+
+    实现表单展示用户输入框
+
+[33mcommit 0ca51b265a8a78b2bb81547c6476971db279d103[m[33m ([m[1;33mtag: [m[1;33mv3.3[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Tue Mar 19 22:30:38 2024 +0800
+
+    实现添加用户按钮及弹窗功能
+
+[33mcommit 81bd221b299c7dbbc8b1caffe8b9478032c8d37b[m[33m ([m[1;33mtag: [m[1;33mv3.2[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Tue Mar 19 22:24:05 2024 +0800
+
+    实现搜索功能
+
+[33mcommit 84621f72c29cd47c972d8546a2f3974884b273a8[m[33m ([m[1;33mtag: [m[1;33mv3.1[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Tue Mar 19 20:51:34 2024 +0800
+
+    实现用户状态的修改，状态与数据库同步
+
+[33mcommit fd9b15c37a8bccbd1ddeea1f26ec2f516ac28f07[m[33m ([m[1;33mtag: [m[1;33mv3.0[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Tue Mar 19 00:48:42 2024 +0800
+
+    使用pagination组件实现数据分页效果
+
+[33mcommit f2bd9e1e73d9fb6d633608eebe362e73cf26e843[m[33m ([m[1;33mtag: [m[1;33mv2.9[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Tue Mar 19 00:15:40 2024 +0800
+
+    使用slot插槽添加button按钮，同时使用tooltip进行文字提示修饰
+
+[33mcommit 5dee789db93380e3010a52baafb645587987cccb[m[33m ([m[1;33mtag: [m[1;33mv2.8[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Mon Mar 18 00:51:12 2024 +0800
+
+    根据状态的true/false值渲染switch开关
+
+[33mcommit 2c762a94ac4bba0bd2a3d03c0d0458091c26ff73[m[33m ([m[1;33mtag: [m[1;33mv2.7[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Mon Mar 18 00:43:28 2024 +0800
+
+    添加索引列
+
+[33mcommit 7b6327d3d54cb6240646716e0417b00e14d11ccb[m[33m ([m[1;33mtag: [m[1;33mv2.6[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Mon Mar 18 00:41:44 2024 +0800
+
+    渲染用户数据，对接数据库接口
+
+[33mcommit 42618137cebb10e861ad2f3d783561a186d4c3f7[m[33m ([m[1;33mtag: [m[1;33mv2.5[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 23:48:58 2024 +0800
+
+    学习使用数据库接口，get网络请求及数据处理
+
+[33mcommit 7e5d4e8ae97117f43342cdd31d604f60103b0648[m[33m ([m[1;33mtag: [m[1;33mv2.4[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 19:38:14 2024 +0800
+
+    使用el-row, el-col进行页面布局
+    使用breadbumb面包屑制作导航栏，并进行链接跳转
+
+[33mcommit 25ab52ac9e5e973eab188cdcfde16a1769c8d54b[m[33m ([m[1;33mtag: [m[1;33mv2.3[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 18:31:04 2024 +0800
+
+    直接在el-menu中使用.path绑定default-active属性
+
+[33mcommit 8608bf84ccd3fa1af724425d96483704d6b391d2[m[33m ([m[1;33mtag: [m[1;33mv2.2[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 18:28:23 2024 +0800
+
+    使用el-menu中default-active属性，确定高亮当前选中的子菜单，需要动态绑定该属性，使用了windows.sessionStorage来缓存当前选中的子菜单
+    不过存在bug，即如果手动跳转网页，因为不会触发单击事件，不会更新缓存，因此被高亮的子菜单会保留
+
+[33mcommit f4a5bf755c66bcf2890303e683130347ca87ce7f[m[33m ([m[1;33mtag: [m[1;33mv2.1[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 18:05:27 2024 +0800
+
+    通过children属性将不同的页面嵌入home页面，并通过router-view路由占位符，将vue导入对应的文件
+
+[33mcommit a1ffc1af5d404a1df77a2f22ac6759c4f9a4c767[m[33m ([m[1;33mtag: [m[1;33mv2.0[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 00:53:58 2024 +0800
+
+    收拾现场
+
+[33mcommit fee3cf6a6b0423d10b353c6d77307f5a21f00b2d[m[33m ([m[1;33mtag: [m[1;33mv1.9[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 00:46:58 2024 +0800
+
+    实现侧边栏路由改造，开启路由模式，通过Index作为跳转地址
+
+[33mcommit faea8ceb0284b54225d75f996db5f1d22e2b0f68[m[33m ([m[1;33mtag: [m[1;33mv1.8[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sun Mar 17 00:37:39 2024 +0800
+
+    使用路由占位符将页面引入另一个页面中，路由配置children属性及redirect重定向操作
+
+[33mcommit 98238ea94609be03dde037ef991cb39cb530a298[m[33m ([m[1;33mtag: [m[1;33mv1.7[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 12:10:40 2024 +0800
+
+    实现侧边菜单栏的折叠与展开，动态绑定组件的宽度
+
+[33mcommit 98b6163a40b15469d2481018674eb1dc81b64e65[m[33m ([m[1;33mtag: [m[1;33mv1.6[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 10:29:48 2024 +0800
+
+    优化菜单布局，使用unique-opened属性绑定true布尔值，来实现同时只有一个子菜单展开
+
+[33mcommit 04fee2281b495a4c8c05d9f956f4b616078137cc[m[33m ([m[1;33mtag: [m[1;33mv1.5[m[33m)[m
+Author: Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 08:58:18 2024 +0800
+
+    美化菜单，使用iconfont网站的图标，通过列表将不同的图标注册到每一个组件上，使用v-bind动态绑定图标
+
+[33mcommit 8dae4b8e05741e0f1590390e5b7d868c680d7f84[m[33m ([m[1;33mtag: [m[1;33mdebug-v1.4[m[33m, [m[1;31morigin/debug[m[33m, [m[1;32mdebug[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 07:44:00 2024 +0800
+
+    Debug v1.4代码未正确绑定子菜单的index属性，因此不能实现子菜单的单个激活，本次提交测试Git的分支功能以及reset --soft功能，即单独提交一个debug分支并合并到login分支上
+
+[33mcommit 60cee9a97c33ca4ca6530ba061a461c4d12699f5[m[33m ([m[1;33mtag: [m[1;33mv1.4[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 07:29:07 2024 +0800
+
+    完成菜单列表数据的获取以及初始化，通过v-bind绑定数据到对应的属性上，v-for需要指定key值
+
+[33mcommit a4f555db95bab2fb751679d7c7961cc194dfce32[m[33m ([m[1;33mtag: [m[1;33mv1.3[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 01:31:49 2024 +0800
+
+    使用API接口调用数据库数据，使用async配合await实现异步网络访问请求
+
+[33mcommit e57d3e446c7eed51d4a95de7c8d8ad53d3046cd5[m[33m ([m[1;33mtag: [m[1;33mv1.2[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 01:11:35 2024 +0800
+
+    给http请求头配置token，使用axios发起http请求，对应配置
+
+[33mcommit a3bc620b55ea5e7155d89fd5b49da7203559d002[m[33m ([m[1;33mtag: [m[1;33mv1.1[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 00:52:03 2024 +0800
+
+    完成菜单导航布局，引入并使用elementUi中el-menu, el-submenu以及el-menu-item组件形成二级菜单布局
+
+[33mcommit 15c8f32f1d167789ca22275cb2a85a528e6d172a[m[33m ([m[1;33mtag: [m[1;33mv1.0[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Sat Mar 16 00:12:46 2024 +0800
+
+    完成主页Header布局，Css样式设置
+
+[33mcommit 1828a7602e95b961c2aef3617a854f5f68c2670e[m[33m ([m[1;33mtag: [m[1;33mv0.9[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Fri Mar 15 23:47:01 2024 +0800
+
+    开始学习使用elementUi进行首页布局
+    导入Container, Header, Main三个elementUi组件并设计相应的css样式
+
+[33mcommit 3a59d4764031afc2b37c3e8d351de1c21d7615ca[m[33m ([m[1;33mtag: [m[1;33mv0.8[m[33m)[m
+Author: 林允儿 Yoona Lim <miraclefishleong@gmail.com>
+Date:   Thu Mar 14 00:01:22 2024 +0800
+
+    针对Eslint做了优化，可以使用vscode自带的代码Format功能
+
+[33mcommit 81ee56a49ee3d4e0a1393dbcb026a7130423831f[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Wed Mar 13 00:09:14 2024 +0800
+
+    使用.replace()替换.push()，因为replace不会留下历史记录，不能回退至前一个页面，更安全
+
+[33mcommit cd602fbb6ae48d111cbda969f56cdde41e73829b[m[33m ([m[1;33mtag: [m[1;33mv0.6[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Wed Mar 13 00:05:41 2024 +0800
+
+    实现logout退出功能
+
+[33mcommit dfc044e49e2b61e11b18ac0f2901ac1f55d556a9[m[33m ([m[1;33mtag: [m[1;33mv0.7[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Tue Mar 12 23:58:30 2024 +0800
+
+    实现数据绑定vue model变量中，实现vue ref对象获取组件对象并调用组件内置方法验证及重置，实现elementui内置弹窗提示，实现vue页面跳转，实现使用路由导航守卫控制访问权限
+
+[33mcommit 7123278217de5b4e613307063760a695cb94cfc7[m[33m ([m[1;33mtag: [m[1;33mv0.4[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Tue Mar 12 21:42:50 2024 +0800
+
+    完成数据输入与Vue数据绑定
+
+[33mcommit d9a2326eebf3e2c7e8097549c74e9c0470e86187[m[33m ([m[1;33mtag: [m[1;33mv0.3[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Tue Mar 12 00:36:15 2024 +0800
+
+    完成login登录界面的基本布局
+
+[33mcommit fb374db2fd4744574713b5538cb3dd3e11a8313c[m[33m ([m[1;33mtag: [m[1;33mv0.2[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Mon Mar 11 23:47:06 2024 +0800
+
+    vue ui中vue-shop项目进行精简初始化
+
+[33mcommit 89eb45b0ccb5e9a0bd3826ef89e090746b87d2c9[m[33m ([m[1;33mtag: [m[1;33mv0.5[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Mon Mar 11 23:03:53 2024 +0800
+
+    Vue ui 插件plugin及依赖devtools配置完成
+
+[33mcommit 13533bbb745cfa2e6c5fc6d222a8a879bf21f945[m[33m ([m[1;33mtag: [m[1;33mv0.1[m[33m, [m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: yoonalimsauce <miraclefishleong@gmail.com>
+Date:   Mon Mar 11 22:55:01 2024 +0800
+
+    init

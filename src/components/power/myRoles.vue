@@ -20,12 +20,11 @@
         <!-- 展开列 -->
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <el-row v-for="(item) in scope.row.children" :key="item.id">>
+            <el-row :class="['bdbottom', index === 0 ? 'bdtop' : '']" v-for="(item, index) in scope.row.children" :key="item.id">>
               <!-- 渲染一级权限 -->
               <el-col :span="5">
-                <el-tag>
-                  {{ item.authName }}
-                </el-tag>
+                <el-tag>{{ item.authName }}</el-tag>
+                <i class="el-icon-arrow-right"></i>
               </el-col>
               <!-- 渲染二级和三级权限 -->
               <el-col :span="19"></el-col>
@@ -73,5 +72,13 @@ export default {
 </script>
 
 <style>
-
+  .el-tag {
+    margin: 7px 40px;
+  }
+  .bdtop {
+    border-top: 1px solid #aaa;
+  }
+  .bdbottom {
+    border-bottom: 1px solid #aaa;
+  }
 </style>
