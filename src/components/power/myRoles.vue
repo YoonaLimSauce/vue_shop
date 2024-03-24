@@ -21,7 +21,7 @@
         <el-table-column type="expand">
           <template slot-scope="scope">
             <!-- 权限列表 -->
-            <el-row :class="['bdbottom', index === 0 ? 'bdtop' : '']" v-for="(item, index) in scope.row.children" :key="item.id">
+            <el-row :class="['bdbottom', index === 0 ? 'bdtop' : '', 'vcenter ']" v-for="(item, index) in scope.row.children" :key="item.id">
               <!-- 一级权限 -->
               <el-col :span="5" :offset="0" :push="1">
                 <el-tag>
@@ -32,7 +32,7 @@
               <!-- 二级权限 -->
               <el-col :span="19">
                 <!-- 通过for循环嵌套渲染二级权限 -->
-                <el-row :span="6" :class="[subIndex === 0 ? '0' : 'bdtop']" v-for="(subItem, subIndex) in item.children" :key="subItem.id">
+                <el-row :span="6" :class="[subIndex === 0 ? '0' : 'bdtop', 'vcenter']" v-for="(subItem, subIndex) in item.children" :key="subItem.id">
                   <el-col :span="6">
                     <el-tag type="success">
                       {{ subItem.authName }}
@@ -99,5 +99,9 @@ export default {
   }
   .bdbottom {
     border-bottom: 1px solid #dddddd;
+  }
+  .vcenter {
+    display: flex;
+    align-items: center;
   }
 </style>
