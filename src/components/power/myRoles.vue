@@ -24,7 +24,7 @@
             <el-row :class="['bdbottom', index === 0 ? 'bdtop' : '', 'vcenter ']" v-for="(item, index) in scope.row.children" :key="item.id">
               <!-- 一级权限 -->
               <el-col :span="5" :offset="0" :push="1">
-                <el-tag>
+                <el-tag closable @close="removeRightById(scope.row, item.id) ">
                   {{ item.authName }}
                 </el-tag>
                 <i class="el-icon-caret-right"></i>
@@ -34,14 +34,14 @@
                 <!-- 通过for循环嵌套渲染二级权限 -->
                 <el-row :span="6" :class="[subIndex === 0 ? '0' : 'bdtop', 'vcenter']" v-for="(subItem, subIndex) in item.children" :key="subItem.id">
                   <el-col :span="6">
-                    <el-tag type="success">
+                    <el-tag type="success" closable @close="removeRightById(scope.row, subItem.id) ">
                       {{ subItem.authName }}
                     </el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                   <!-- 三级权限 -->
                   <el-col :span="18">
-                    <el-tag type="warning" v-for="(subSubItem) in subItem.children" :key="subSubItem.id" closable @close="removeRightById">
+                    <el-tag type="warning" v-for="(subSubItem) in subItem.children" :key="subSubItem.id" closable @close="removeRightById(scope.row, subSubItem.id) ">
                       {{ subSubItem.authName }}
                     </el-tag>
                   </el-col>
@@ -84,9 +84,8 @@ export default {
         return this.$message.error(result.meta.message)
       }
       this.rolesList = result.data
-      console.log(this.rolesList)
     },
-    async removeRightById() {
+    async removeRightById(role, rightId) {
       // 弹框提示用户是否删除权限
       const confirmResult = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -97,10 +96,17 @@ export default {
           return result
         }
       )
-
+      // 判断用户是否点击了确定按钮
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
+      // 发送请求删除权限
+      const { data: result } = await this.$http.delete(`roles/${role.id}/rights/${rightId}`)
+      if (result.meta.status !== 200) {
+        return this.$message.error('删除权限失败')
+      }
+      // 刷新页面
+      role.children = result.data
     }
   }
 }
