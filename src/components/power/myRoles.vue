@@ -41,7 +41,7 @@
                   </el-col>
                   <!-- 三级权限 -->
                   <el-col :span="18">
-                    <el-tag type="warning" v-for="(subSubItem) in subItem.children" :key="subSubItem.id">
+                    <el-tag type="warning" v-for="(subSubItem) in subItem.children" :key="subSubItem.id" closable @close="removeRightById">
                       {{ subSubItem.authName }}
                     </el-tag>
                   </el-col>
@@ -85,6 +85,22 @@ export default {
       }
       this.rolesList = result.data
       console.log(this.rolesList)
+    },
+    async removeRightById() {
+      // 弹框提示用户是否删除权限
+      const confirmResult = await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(
+        (result) => {
+          return result
+        }
+      )
+
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除')
+      }
     }
   }
 }
