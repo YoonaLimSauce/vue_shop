@@ -32,12 +32,18 @@
               <!-- 二级权限 -->
               <el-col :span="19">
                 <!-- 通过for循环嵌套渲染二级权限 -->
-                <el-row :class="[subIndex === 0 ? '0' : 'bdtop']" v-for="(subItem, subIndex) in item.children" :key="subItem.id">
-                  <el-col>
+                <el-row :span="6" :class="[subIndex === 0 ? '0' : 'bdtop']" v-for="(subItem, subIndex) in item.children" :key="subItem.id">
+                  <el-col :span="6">
                     <el-tag type="success">
                       {{ subItem.authName }}
                     </el-tag>
                     <i class="el-icon-caret-right"></i>
+                  </el-col>
+                  <!-- 三级权限 -->
+                  <el-col :span="18">
+                    <el-tag type="warning" v-for="(subSubItem) in subItem.children" :key="subSubItem.id">
+                      {{ subSubItem.authName }}
+                    </el-tag>
                   </el-col>
                 </el-row>
               </el-col>
