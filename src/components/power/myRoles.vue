@@ -30,7 +30,17 @@
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <!-- 二级权限 -->
-              <el-col :span="19">456</el-col>
+              <el-col :span="19">
+                <!-- 通过for循环嵌套渲染二级权限 -->
+                <el-row :class="[subIndex === 0 ? '0' : 'bdtop']" v-for="(subItem, subIndex) in item.children" :key="subItem.id">
+                  <el-col>
+                    <el-tag type="success">
+                      {{ subItem.authName }}
+                    </el-tag>
+                    <i class="el-icon-caret-right"></i>
+                  </el-col>
+                </el-row>
+              </el-col>
             </el-row>
           </template>
         </el-table-column>
