@@ -44,7 +44,7 @@
             </el-tooltip>
             <!-- 设置按钮 -->
             <el-tooltip effect="dark" content="设置" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+              <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -114,6 +114,21 @@
         <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 删除用户对话框 -->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="setRoleDialogVisible"
+      width="50%"
+      :before-close="handleClose">
+      <div>
+        <p>当前的用户：{{ userInfo.username }}</p>
+        <p>当前的角色：{{ userInfo.role_name }}</p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRoleDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -129,15 +144,19 @@ export default {
         pagenum: 1,
         pagesize: 2
       },
+      // 用户列表数据
       userList: [],
       total: 0,
+      // 添加用户对话框的显示和隐藏
       addDialogVisible: false,
+      // 添加用户表单数据
       addForm: {
         username: '',
         password: '',
         email: '',
         mobile: ''
       },
+      // 添加用户表单验证规则
       addFormRules: {
         username: [
           {
@@ -188,12 +207,15 @@ export default {
           }
         ]
       },
+      // 修改用户信息对话框的显示和隐藏
       editDialogVisible: false,
+      // 修改用户信息表单数据
       editForm: {
         username: '',
         email: '',
         mobile: ''
       },
+      // 修改用户信息表单验证规则
       editFormRules: {
         email: [
           {
@@ -217,7 +239,11 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      // 控制分配角色对话框的显示和隐藏
+      setRoleDialogVisible: false,
+      // 需要被分配角色的用户信息
+      userInfo: {}
     }
   },
   /* 组件方法 */
@@ -234,15 +260,12 @@ export default {
       this.userList = result.data.users // 获取用户列表
       this.total = result.data.total // 获取用户总数
     },
-    /* 修改用户状态 */
-    async userStateChange(userInfo) {
-      const { data: result } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
-      if (result.meta.status !== 200) {
-        userInfo.mg_state = !userInfo.mg_state // 状态反转
-        return this.$message.error('修改用户状态失败！')
-      }
-      this.$message.success('修改用户状态成功！')
+    /* 设置用户角色 */
+    async setRole(userInfo) {
+      this.userInfo = userInfo
+      this.setRoleDialogVisible = true
     },
+    /* 删除用户 */
     async removeUserById(id) {
       const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -261,6 +284,15 @@ export default {
       }
       this.$message.success('删除用户成功！')
       this.getUserList()
+    },
+    /* 修改用户状态 */
+    async userStateChange(userInfo) {
+      const { data: result } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
+      if (result.meta.status !== 200) {
+        userInfo.mg_state = !userInfo.mg_state // 状态反转
+        return this.$message.error('修改用户状态失败！')
+      }
+      this.$message.success('修改用户状态成功！')
     },
     /* 添加用户对话框关闭事件 */
     addDialogClosed() {
