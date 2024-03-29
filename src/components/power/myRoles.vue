@@ -55,10 +55,10 @@
         <el-table-column prop="roleName" label="角色名称"></el-table-column>
         <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="">
+          <template slot-scope="scope">
             <el-button size="mini" type="primary">编辑</el-button>
             <el-button size="mini" type="danger">删除</el-button>
-            <el-button size="mini" type="warning" @click="showSetRightDialog">分配权限</el-button>
+            <el-button size="mini" type="warning" @click="showSetRightDialog(scope.row)">分配权限</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,7 +68,7 @@
     <el-dialog title="分配权限" :visible.sync="setRightDialogVisible"
       width="50%">
       <el-tree :data="rightsList" :props="treeProps" show-checkbox
-        node-key="id" :default-expand-all="true"></el-tree>
+        node-key="id" :default-expand-all="true" :default-checked-keys="defaultCheckedKeys"></el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="setRightDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
@@ -91,7 +91,9 @@ export default {
       treeProps: {
         children: 'children',
         label: 'authName'
-      }
+      },
+      // 默认选中的权限id列表
+      defaultCheckedKeys: []
     }
   },
   created() {
@@ -106,12 +108,14 @@ export default {
       }
       this.rolesList = result.data
     },
-    async showSetRightDialog() {
+    async showSetRightDialog(role) {
       const { data: result } = await this.$http.get('rights/tree')
       if (result.meta.status !== 200) {
         return this.$message.error(result.meta.message)
       }
       this.rightsList = result.data
+      this.defaultCheckedKeys = []
+      this.getLeafKeys(role, this.defaultCheckedKeys)
       // 显示对话框
       this.setRightDialogVisible = true
     },
@@ -137,6 +141,16 @@ export default {
       }
       // 刷新页面
       role.children = result.data
+    },
+    getLeafKeys(node, array) {
+      if (!node.children) {
+        return array.push(node.id)
+      }
+      node.children.forEach(
+        (item) => {
+          this.getLeafKeys(item, array)
+        }
+      )
     }
   }
 }
