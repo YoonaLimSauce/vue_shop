@@ -66,12 +66,13 @@
 
     <!-- 权限分配的对话框 -->
     <el-dialog title="分配权限" :visible.sync="setRightDialogVisible"
-      width="50%">
+      width="50%" @close="setRightDialogClosed">
       <el-tree :data="rightsList" :props="treeProps" show-checkbox
-        node-key="id" :default-expand-all="true" :default-checked-keys="defaultCheckedKeys"></el-tree>
+        node-key="id" :default-expand-all="true" :default-checked-keys="defaultCheckedKeys"
+        ref="treeRef"></el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="setRightDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="allotRights">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -93,13 +94,33 @@ export default {
         label: 'authName'
       },
       // 默认选中的权限id列表
-      defaultCheckedKeys: []
+      defaultCheckedKeys: [],
+      // 当前选中的角色id
+      roleID: ''
     }
   },
   created() {
     this.getRolesList()
   },
   methods: {
+    async allotRights() {
+      // 获取所有选中的权限
+      const checkedKeys = [
+        this.$refs.treeRef.getCheckedKeys(),
+        this.$refs.treeRef.getHalfCheckedKeys()
+      ]
+      // 发送请求分配权限
+      const { data: result } = await this.$http.post(`roles/${this.roleID}/rights`, {
+        rids: checkedKeys.join(',')
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error(result.meta.message)
+      }
+      this.$message.success('分配权限成功')
+      // 刷新页面
+      this.getRolesList()
+      this.setRightDialogVisible = false
+    },
     async getRolesList() {
       // 获取角色列表
       const { data: result } = await this.$http.get('roles')
@@ -109,12 +130,12 @@ export default {
       this.rolesList = result.data
     },
     async showSetRightDialog(role) {
+      this.roleID = role.id
       const { data: result } = await this.$http.get('rights/tree')
       if (result.meta.status !== 200) {
         return this.$message.error(result.meta.message)
       }
       this.rightsList = result.data
-      this.defaultCheckedKeys = []
       this.getLeafKeys(role, this.defaultCheckedKeys)
       // 显示对话框
       this.setRightDialogVisible = true
@@ -151,6 +172,10 @@ export default {
           this.getLeafKeys(item, array)
         }
       )
+    },
+    // 监听分配权限对话框的关闭事件
+    setRightDialogClosed() {
+      this.defaultCheckedKeys = []
     }
   }
 }
