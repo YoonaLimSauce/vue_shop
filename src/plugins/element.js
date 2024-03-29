@@ -8,7 +8,7 @@
  */
 import Vue from 'vue'
 import {
-  Button, Form, FormItem, Input, Message, Tag,
+  Button, Form, FormItem, Input, Message, Tag, Tree,
   Container, Header, Aside, Main, Footer, Menu, Submenu, MenuItem, MenuItemGroup,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn,
   Switch, Tooltip, Pagination, Dialog, MessageBox
@@ -39,6 +39,7 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Tag)
+Vue.use(Tree)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
