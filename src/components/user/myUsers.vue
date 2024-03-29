@@ -145,7 +145,7 @@
       title="分配角色"
       :visible.sync="setRoleDialogVisible"
       width="50%"
-      :before-close="handleClose"
+      @close="setRoleDialogClosed"
     >
       <div>
         <p>当前的用户：{{ userInfo.username }}</p>
@@ -165,7 +165,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="setRoleDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="setRoleDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -303,6 +303,21 @@ export default {
       this.userList = result.data.users // 获取用户列表
       this.total = result.data.total // 获取用户总数
     },
+    /* 点击分配角色按钮 */
+    async saveRoleInfo() {
+      if (!this.selectedRoleID) {
+        return this.$message.error('请选择角色！')
+      }
+      const { data: result } = await this.$http.put(`users/${this.userInfo.id}/role`, {
+        rid: this.selectedRoleID
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error('分配角色失败！')
+      }
+      this.$message.success('分配角色成功！')
+      this.getUserList()
+      this.setRoleDialogVisible = false
+    },
     /* 设置用户角色 */
     async setRole(userInfo) {
       this.userInfo = userInfo
@@ -312,6 +327,14 @@ export default {
       }
       this.rolesList = result.data // 获取角色列表
       this.setRoleDialogVisible = true
+    },
+    async showEditDialog(id) {
+      const { data: result } = await this.$http.get('users/' + id)
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取用户信息失败！')
+      }
+      this.editForm = result.data // 获取用户信息
+      this.editDialogVisible = true
     },
     /* 删除用户 */
     async removeUserById(id) {
@@ -409,13 +432,10 @@ export default {
       this.queryInfo.pagesize = newSize
       this.getUserList()
     },
-    async showEditDialog(id) {
-      const { data: result } = await this.$http.get('users/' + id)
-      if (result.meta.status !== 200) {
-        return this.$message.error('获取用户信息失败！')
-      }
-      this.editForm = result.data // 获取用户信息
-      this.editDialogVisible = true
+    /* 分配角色对话框关闭事件 */
+    setRoleDialogClosed() {
+      this.selectedRoleID = ''
+      this.userInfo = {}
     }
   },
   /* 组件创建完成后获取用户列表 */
