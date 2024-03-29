@@ -58,11 +58,21 @@
           <template slot-scope="">
             <el-button size="mini" type="primary">编辑</el-button>
             <el-button size="mini" type="danger">删除</el-button>
-            <el-button size="mini" type="warning">分配权限</el-button>
+            <el-button size="mini" type="warning" @click="showSetRightDialog">分配权限</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+
+    <!-- 权限分配的对话框 -->
+    <el-dialog title="分配权限" :visible.sync="setRightDialogVisible"
+      width="50%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRightDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -70,7 +80,12 @@
 export default {
   data() {
     return {
-      rolesList: []
+      // 所有角色列表数据
+      rolesList: [],
+      // 控制分配权限对话框的显示和隐藏
+      setRightDialogVisible: false,
+      // 所有权限列表数据
+      rightsList: []
     }
   },
   created() {
@@ -84,6 +99,15 @@ export default {
         return this.$message.error(result.meta.message)
       }
       this.rolesList = result.data
+    },
+    async showSetRightDialog() {
+      const { data: result } = await this.$http.get('rights/tree')
+      if (result.meta.status !== 200) {
+        return this.$message.error(result.meta.message)
+      }
+      this.rightsList = result.data
+      // 显示对话框
+      this.setRightDialogVisible = true
     },
     async removeRightById(role, rightId) {
       // 弹框提示用户是否删除权限
