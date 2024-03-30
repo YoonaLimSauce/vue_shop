@@ -2,7 +2,7 @@
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-12 23:36:03
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-30 21:13:21
+ * @LastEditTime: 2024-03-30 23:47:27
  * @FilePath: \vue-shop\src\components\Home.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -101,7 +101,6 @@ export default {
       for (let i = 0; i < res.data.length; ++i) {
         this.iconsObj[res.data[i].id] = 'iconfont icon-' + iconsList[i]
       }
-      console.log(this.menuList)
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse

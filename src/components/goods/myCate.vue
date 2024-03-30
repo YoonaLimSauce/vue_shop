@@ -28,10 +28,36 @@ export default {
   data () {
     return {
       // Data properties go here
+      // 查询条件
+      queryInfo: {
+        type: 3,
+        pagenum: 1,
+        pagesize: 5
+      },
+      // 商品分类列表
+      cateList: [],
+      // 总数据条数
+      total: 0
     }
+  },
+  created() {
+    this.getCateList()
   },
   methods: {
     // Component methods go here
+    // 获取商品分类列表
+    async getCateList() {
+      const { data: result } = await this.$http.get('categories', {
+        params: this.queryInfo
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取商品分类列表失败！')
+      }
+      // 把数据赋值给商品分类列表
+      this.cateList = result.data.result
+      // 把总数据条数赋值给total
+      this.total = result.data.total
+    }
   }
 }
 </script>
