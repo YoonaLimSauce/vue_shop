@@ -17,6 +17,8 @@
     </el-card>
 
     <!-- 表格视图区域 -->
+    <tree-table :data="cateList" :columns="columns"
+      :selection-type="false" :expand-type="false" show-index index-text="#"></tree-table>
 
     <!-- 分页区域 -->
   </div>
@@ -37,7 +39,14 @@ export default {
       // 商品分类列表
       cateList: [],
       // 总数据条数
-      total: 0
+      total: 0,
+      // 表格列配置
+      columns: [
+        {
+          label: '分类名称',
+          prop: 'cat_name'
+        }
+      ]
     }
   },
   created() {
