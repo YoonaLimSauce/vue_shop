@@ -2,13 +2,13 @@
  * @Author: 林允儿 Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-13 22:00:29
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-19 00:43:41
+ * @LastEditTime: 2024-03-31 17:38:10
  * @FilePath: \vue_shop\src\plugins\element.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import Vue from 'vue'
 import {
-  Button, Form, FormItem, Input, Message, Tag, Tree, Select, Option,
+  Button, Form, FormItem, Input, Message, Tag, Tree, Select, Option, Cascader,
   Container, Header, Aside, Main, Footer, Menu, Submenu, MenuItem, MenuItemGroup,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn,
   Switch, Tooltip, Pagination, Dialog, MessageBox
@@ -42,6 +42,7 @@ Vue.use(Tag)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
