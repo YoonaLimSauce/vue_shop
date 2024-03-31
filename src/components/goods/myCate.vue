@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 18:07:15
+ * @LastEditTime: 2024-03-31 22:37:02
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -81,7 +81,7 @@
       width="50%">
       <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px">
         <el-form-item label="分类名称" prop="cat_name">
-          <el-input v-model="addCateForm.cat_name"></el-input>
+          <el-input v-model="addCateForm.cat_name" id="cat_name"></el-input>
         </el-form-item>
         <el-form-item label="父级分类">
           <el-cascader class="el-cascader-class"
@@ -211,7 +211,13 @@ export default {
     },
     // 父级分类改变事件处理函数
     parentCateChanged() {
-      console.log(this.selectedKeys)
+      if (this.selectedKeys.length > 0) {
+        this.addCateForm.cat_parent_id = this.selectedKeys[this.selectedKeys.length - 1]
+      } else {
+        this.addCateForm.cat_parent_id = 0
+      }
+      this.addCateForm.cat_level = this.selectedKeys.length
+      console.log(this.addCateForm)
     },
     // 显示添加分类对话框
     showAddCateDialog() {
