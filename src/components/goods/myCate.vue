@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 10:53:00
+ * @LastEditTime: 2024-03-31 13:22:54
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -26,7 +26,16 @@
 
     <!-- 表格视图区域 -->
     <tree-table :data="cateList" :columns="columns"
-      :selection-type="false" :expand-type="false" show-index index-text="#"></tree-table>
+      :selection-type="false" :expand-type="false" show-index index-text="#">
+      <template slot="isValid" slot-scope="scope">
+        <!-- <el-tag v-if="scope.row.cat_deleted === false" type="success">有效</el-tag>
+        <el-tag v-else type="danger">无效</el-tag> -->
+        <i class="el-icon-success" style="color: lightgreen;"
+          v-if="scope.row.cat_deleted === false"></i>
+        <i class="el-icon-error" style="color: lightgreen;"
+          v-else></i>
+      </template>
+    </tree-table>
 
     <!-- 表格视图区域 el-table -->
     <el-table
@@ -38,13 +47,11 @@
       :tree-props="{children: 'children'}">
       <el-table-column
         type="index"
-        label="分类名称"
-        width="180">
+        label="分类名称">
       </el-table-column>
       <el-table-column
         prop="cat_name"
-        label="分类名称"
-        width="180">
+        label="分类名称">
       </el-table-column>
     </el-table>
 
@@ -73,6 +80,12 @@ export default {
         {
           label: '分类名称',
           prop: 'cat_name'
+        },
+        {
+          label: '是否有效',
+          // 使用插槽自定义显示内容
+          type: 'template',
+          template: 'isValid'
         }
       ]
     }
