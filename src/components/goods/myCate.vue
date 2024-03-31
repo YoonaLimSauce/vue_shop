@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 22:46:15
+ * @LastEditTime: 2024-03-31 23:39:52
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -95,7 +95,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addCateDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addCateDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addCateFormSubmit">确 定</el-button>
       </span>
     </el-dialog>
 
@@ -153,7 +153,7 @@ export default {
         // 分类名称
         cat_name: '',
         // 分类父id
-        cat_parent_id: 0,
+        cat_pid: 0,
         // 分类等级默认为一级分类
         cat_level: 0
       },
@@ -214,15 +214,28 @@ export default {
     addCateDialogClosed() {
       this.$refs.addCateFormRef.resetFields()
       this.selectedKeys = []
-      this.addCateForm.cat_parent_id = 0
+      this.addCateForm.cat_pid = 0
       this.addCateForm.cat_level = 0
+    },
+    // 添加分类表单提交事件处理函数
+    addCateFormSubmit() {
+      this.$refs.addCateFormRef.validate(async valid => {
+        if (!valid) return
+        const { data: result } = await this.$http.post('categories', this.addCateForm)
+        if (result.meta.status !== 201) {
+          return this.$message.error('添加分类失败！')
+        }
+        this.$message.success('添加分类成功！')
+        this.getCateList()
+        this.addCateDialogVisible = false
+      })
     },
     // 父级分类改变事件处理函数
     parentCateChanged() {
       if (this.selectedKeys.length > 0) {
-        this.addCateForm.cat_parent_id = this.selectedKeys[this.selectedKeys.length - 1]
+        this.addCateForm.cat_pid = this.selectedKeys[this.selectedKeys.length - 1]
       } else {
-        this.addCateForm.cat_parent_id = 0
+        this.addCateForm.cat_pid = 0
       }
       this.addCateForm.cat_level = this.selectedKeys.length
     },
