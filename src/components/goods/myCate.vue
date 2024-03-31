@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 16:59:58
+ * @LastEditTime: 2024-03-31 17:12:43
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -175,6 +175,15 @@ export default {
       // 把总数据条数赋值给total
       this.total = result.data.total
     },
+    async getParentCateList() {
+      const { data: result } = await this.$http.get('categories', {
+        params: { type: 2 }
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取父级分类数据失败！')
+      }
+      console.log(result.data)
+    },
     async pageSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getCateList()
@@ -184,6 +193,9 @@ export default {
       this.getCateList()
     },
     showAddCateDialog() {
+      // 获取父级分类数据列表
+      this.getParentCateList()
+      // 显示添加分类对话框
       this.addCateDialogVisible = true
     }
   }
