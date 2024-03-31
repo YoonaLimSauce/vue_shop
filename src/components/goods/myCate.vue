@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 22:37:02
+ * @LastEditTime: 2024-03-31 22:46:15
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -78,8 +78,9 @@
     <el-dialog
       title="提示"
       :visible.sync="addCateDialogVisible"
-      width="50%">
-      <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px">
+      @close="addCateDialogClosed" width="50%">
+      <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef"
+        label-width="100px">
         <el-form-item label="分类名称" prop="cat_name">
           <el-input v-model="addCateForm.cat_name" id="cat_name"></el-input>
         </el-form-item>
@@ -209,6 +210,13 @@ export default {
       this.queryInfo.pagenum = newPage
       this.getCateList()
     },
+    // 添加分类对话框关闭事件处理函数
+    addCateDialogClosed() {
+      this.$refs.addCateFormRef.resetFields()
+      this.selectedKeys = []
+      this.addCateForm.cat_parent_id = 0
+      this.addCateForm.cat_level = 0
+    },
     // 父级分类改变事件处理函数
     parentCateChanged() {
       if (this.selectedKeys.length > 0) {
@@ -217,7 +225,6 @@ export default {
         this.addCateForm.cat_parent_id = 0
       }
       this.addCateForm.cat_level = this.selectedKeys.length
-      console.log(this.addCateForm)
     },
     // 显示添加分类对话框
     showAddCateDialog() {
