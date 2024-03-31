@@ -1,3 +1,11 @@
+<!--
+ * @Author: Yoona Lim miraclefishleong@gmail.com
+ * @Date: 2024-03-30 21:09:07
+ * @LastEditors: Yoona Lim miraclefishleong@gmail.com
+ * @LastEditTime: 2024-03-31 10:53:00
+ * @FilePath: \vue_shop\src\components\goods\myCate.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div>
     <!-- Component HTML goes here -->
@@ -19,6 +27,26 @@
     <!-- 表格视图区域 -->
     <tree-table :data="cateList" :columns="columns"
       :selection-type="false" :expand-type="false" show-index index-text="#"></tree-table>
+
+    <!-- 表格视图区域 el-table -->
+    <el-table
+      :data="cateList"
+      style="width: 100%;margin-bottom: 20px;"
+      row-key="cat_id"
+      border
+      :default-expand-all="false"
+      :tree-props="{children: 'children'}">
+      <el-table-column
+        type="index"
+        label="分类名称"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="cat_name"
+        label="分类名称"
+        width="180">
+      </el-table-column>
+    </el-table>
 
     <!-- 分页区域 -->
   </div>
