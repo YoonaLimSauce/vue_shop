@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 13:56:05
+ * @LastEditTime: 2024-03-31 16:59:58
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@
     <el-card>
       <el-row>
         <el-col>
-          <el-button type="primary">添加分类</el-button>
+          <el-button type="primary" @click="showAddCateDialog">添加分类</el-button>
         </el-col>
       </el-row>
       <!-- 表格视图区域 -->
@@ -74,6 +74,23 @@
         label="分类名称">
       </el-table-column>
     </el-table> -->
+
+    <el-dialog
+      title="提示"
+      :visible.sync="addCateDialogVisible"
+      width="50%">
+      <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px">
+        <el-form-item label="分类名称" prop="cat_name">
+          <el-input v-model="addCateForm.cat_name"></el-input>
+        </el-form-item>
+        <el-form-item label="父级分类"></el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addCateDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addCateDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -120,7 +137,24 @@ export default {
           // 插槽名称
           template: 'operation'
         }
-      ]
+      ],
+      // 控制添加分类对话框的显示隐藏
+      addCateDialogVisible: false,
+      // 添加分类表单数据对象
+      addCateForm: {
+        // 分类名称
+        cat_name: '',
+        // 分类父id
+        cat_parent_id: 0,
+        // 分类等级默认为一级分类
+        cat_level: 0
+      },
+      // 添加分类表单验证规则
+      addCateFormRules: {
+        cat_name: [
+          { required: true, message: '请输入分类名称', trigger: 'blur' }
+        ]
+      }
     }
   },
   created() {
@@ -148,6 +182,9 @@ export default {
     async pageCurrentNumChange(newPage) {
       this.queryInfo.pagenum = newPage
       this.getCateList()
+    },
+    showAddCateDialog() {
+      this.addCateDialogVisible = true
     }
   }
 }
