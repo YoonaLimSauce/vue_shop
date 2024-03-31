@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-03-30 21:09:07
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-31 13:39:13
+ * @LastEditTime: 2024-03-31 13:56:05
  * @FilePath: \vue_shop\src\components\goods\myCate.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -23,9 +23,9 @@
         </el-col>
       </el-row>
       <!-- 表格视图区域 -->
-      <tree-table :data="cateList" :columns="columns"
-        :selection-type="false" :expand-type="false" show-index index-text="#"
-        style="margin-top: 10px;">
+      <tree-table class="treeTable"
+        :data="cateList" :columns="columns"
+        :selection-type="false" :expand-type="false" show-index index-text="#">
         <template slot="isValid" slot-scope="scope">
           <!-- <el-tag v-if="scope.row.cat_deleted === false" type="success">有效</el-tag>
           <el-tag v-else type="danger">无效</el-tag> -->
@@ -44,10 +44,21 @@
           <el-button type="danger" size="mini">删除</el-button>
         </template>
       </tree-table>
+
+      <!-- 分页区域 -->
+      <el-pagination
+        @size-change="pageSizeChange"
+        @current-change="pageCurrentNumChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[3, 5, 10, 15]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
     </el-card>
 
     <!-- 表格视图区域 el-table -->
-    <el-table
+    <!-- <el-table
       :data="cateList"
       style="width: 100%;margin-bottom: 20px;"
       row-key="cat_id"
@@ -62,9 +73,7 @@
         prop="cat_name"
         label="分类名称">
       </el-table-column>
-    </el-table>
-
-    <!-- 分页区域 -->
+    </el-table> -->
   </div>
 </template>
 
@@ -131,6 +140,14 @@ export default {
       this.cateList = result.data.result
       // 把总数据条数赋值给total
       this.total = result.data.total
+    },
+    async pageSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getCateList()
+    },
+    async pageCurrentNumChange(newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getCateList()
     }
   }
 }
@@ -138,4 +155,7 @@ export default {
 
 <style lang="less" scoped>
 /* Component CSS goes here */
+.treeTable {
+  margin-top: 15px;
+}
 </style>
