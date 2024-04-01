@@ -49,14 +49,22 @@ export default {
         children: 'children',
         expandTrigger: 'hover'
       },
-      cateList: []
+      cateList: [],
+      selectedCateKeys: ''
     }
   },
   created () {
     // Run here when project is created
+    this.getCateList()
   },
   methods: {
     // Component methods go here
+    async getCateList() {
+      const { data: result } = await this.$http.get('categories')
+      if (result.meta.status !== 200) return this.$message.error('获取商品分类失败！')
+      this.cateList = result.data
+      console.log(this.cateList)
+    },
     cateHandleChange() {
       console.log(this.cateList)
     }
