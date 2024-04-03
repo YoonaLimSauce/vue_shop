@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-02 00:39:37
+ * @LastEditTime: 2024-04-04 00:48:37
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,15 +25,21 @@
       <!-- 选择商品分类区域 -->
       <el-row class="select-cate-row">
         <el-col>
-          <span>选择商品分类</span>
+          <span>选择商品分类：</span>
+          <el-cascader
+          v-model="selectedCateKeys"
+          :options="cateList"
+          :props="cateProps"
+          @change="cateHandleChange"></el-cascader>
         </el-col>
       </el-row>
+
+      <!-- Tab标签选项卡切换区域 -->
+      <el-tabs v-model="activeTabName" @tab-click="handleTabClick">
+        <el-tab-pane label="动态参数" name="first">动态参数</el-tab-pane>
+        <el-tab-pane label="静态属性" name="second">静态属性</el-tab-pane>
+      </el-tabs>
     </el-card>
-    <el-cascader
-      v-model="selectedCateKeys"
-      :options="cateList"
-      :props="cateProps"
-      @change="cateHandleChange"></el-cascader>
   </div>
 </template>
 
@@ -54,7 +60,9 @@ export default {
       // 商品分类列表
       cateList: [],
       // 选中的商品分类
-      selectedCateKeys: ''
+      selectedCateKeys: [],
+      // 当前激活的tab标签
+      activeTabName: 'first'
     }
   },
   created () {
@@ -66,12 +74,19 @@ export default {
     // 获取商品分类列表
     async getCateList() {
       const { data: result } = await this.$http.get('categories')
-      if (result.meta.status !== 200) return this.$message.error('获取商品分类失败！')
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取商品分类失败！')
+      }
       this.cateList = result.data
     },
     // 商品分类选择器改变事件
     cateHandleChange() {
-      console.log(this.cateList)
+      if (this.selectedCateKeys.length !== 3) {
+        this.selectedCateKeys = []
+      }
+    },
+    handleTabClick() {
+      console.log(this.activeTabName)
     }
   }
 }
@@ -81,6 +96,6 @@ export default {
 /* Component CSS goes here */
 .select-cate-row {
   margin: 20px 0;
-  font-size: 18px;
+  font-size: 15px;
 }
 </style>
