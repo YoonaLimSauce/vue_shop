@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-04 00:48:37
+ * @LastEditTime: 2024-04-04 00:56:25
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -36,8 +36,14 @@
 
       <!-- Tab标签选项卡切换区域 -->
       <el-tabs v-model="activeTabName" @tab-click="handleTabClick">
-        <el-tab-pane label="动态参数" name="first">动态参数</el-tab-pane>
-        <el-tab-pane label="静态属性" name="second">静态属性</el-tab-pane>
+        <!-- 添加动态参数的面板-->
+        <el-tab-pane label="动态参数" name="first">
+          <el-button type="primary" size="mini" :disabled="isButtonDisabled">动态参数</el-button>
+        </el-tab-pane>
+        <!-- 添加静态属性的面板-->
+        <el-tab-pane label="静态属性" name="second">
+          <el-button type="primary" size="mini" :disabled="isButtonDisabled">静态属性</el-button>
+        </el-tab-pane>
       </el-tabs>
     </el-card>
   </div>
@@ -87,6 +93,13 @@ export default {
     },
     handleTabClick() {
       console.log(this.activeTabName)
+    }
+  },
+  computed: {
+    // Component computed properties go here
+    // 如果按钮需要被禁用，返回true，否则返回false
+    isButtonDisabled() {
+      return this.selectedCateKeys.length !== 3
     }
   }
 }
