@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-04 08:18:48
+ * @LastEditTime: 2024-04-04 08:59:46
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -77,8 +77,15 @@ export default {
   },
   methods: {
     // Component methods go here
-    // 商品分类选择器改变事件
-    async cateHandleChange() {
+    // 获取商品分类列表
+    async getCateList() {
+      const { data: result } = await this.$http.get('categories')
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取商品分类失败！')
+      }
+      this.cateList = result.data
+    },
+    async getParamsData() {
       // 如果选中的商品分类不是第三级分类，清空选中的商品分类
       if (this.selectedCateKeys.length !== 3) {
         this.selectedCateKeys = []
@@ -97,16 +104,12 @@ export default {
       }
       console.log(result.data)
     },
-    // 获取商品分类列表
-    async getCateList() {
-      const { data: result } = await this.$http.get('categories')
-      if (result.meta.status !== 200) {
-        return this.$message.error('获取商品分类失败！')
-      }
-      this.cateList = result.data
+    // 商品分类选择器改变事件
+    cateHandleChange() {
+      this.getParamsData()
     },
     handleTabClick() {
-      console.log(this.activeTabName)
+      this.getParamsData()
     }
   },
   computed: {
