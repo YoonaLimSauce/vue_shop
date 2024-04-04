@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-04 08:59:46
+ * @LastEditTime: 2024-04-04 12:39:03
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -68,7 +68,11 @@ export default {
       // 选中的商品分类
       selectedCateKeys: [],
       // 当前激活的tab标签
-      activeTabName: 'only'
+      activeTabName: 'only',
+      // 动态参数表格数据
+      manyTableData: [],
+      // 静态属性表格数据
+      onlyTableData: []
     }
   },
   created () {
@@ -102,7 +106,11 @@ export default {
       if (result.meta.status !== 200) {
         return this.$message.error('获取参数列表失败！')
       }
-      console.log(result.data)
+      if (this.activeTabName === 'only') {
+        this.onlyTableData = result.data
+      } else {
+        this.manyTableData = result.data
+      }
     },
     // 商品分类选择器改变事件
     cateHandleChange() {
@@ -114,15 +122,16 @@ export default {
   },
   computed: {
     // Component computed properties go here
-    // 如果按钮需要被禁用，返回true，否则返回false
-    isButtonDisabled() {
-      return this.selectedCateKeys.length !== 3
-    },
+    // 当前选中的三级分类id
     cateId() {
       if (this.selectedCateKeys.length === 3) {
         return this.selectedCateKeys[2]
       }
       return null
+    },
+    // 如果按钮需要被禁用，返回true，否则返回false
+    isButtonDisabled() {
+      return this.selectedCateKeys.length !== 3
     }
   }
 }
