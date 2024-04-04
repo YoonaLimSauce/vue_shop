@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-04 00:56:25
+ * @LastEditTime: 2024-04-04 08:18:48
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -37,11 +37,11 @@
       <!-- Tab标签选项卡切换区域 -->
       <el-tabs v-model="activeTabName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板-->
-        <el-tab-pane label="动态参数" name="first">
+        <el-tab-pane label="动态参数" name="only">
           <el-button type="primary" size="mini" :disabled="isButtonDisabled">动态参数</el-button>
         </el-tab-pane>
         <!-- 添加静态属性的面板-->
-        <el-tab-pane label="静态属性" name="second">
+        <el-tab-pane label="静态属性" name="many">
           <el-button type="primary" size="mini" :disabled="isButtonDisabled">静态属性</el-button>
         </el-tab-pane>
       </el-tabs>
@@ -68,7 +68,7 @@ export default {
       // 选中的商品分类
       selectedCateKeys: [],
       // 当前激活的tab标签
-      activeTabName: 'first'
+      activeTabName: 'only'
     }
   },
   created () {
@@ -77,6 +77,26 @@ export default {
   },
   methods: {
     // Component methods go here
+    // 商品分类选择器改变事件
+    async cateHandleChange() {
+      // 如果选中的商品分类不是第三级分类，清空选中的商品分类
+      if (this.selectedCateKeys.length !== 3) {
+        this.selectedCateKeys = []
+        return
+      }
+
+      // 获取参数列表
+      // 根据所选分类的id和当前激活的tab标签，获取参数列表
+      const { data: result } = await this.$http.get(`categories/${this.cateId}/attributes`, {
+        params: {
+          sel: this.activeTabName
+        }
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取参数列表失败！')
+      }
+      console.log(result.data)
+    },
     // 获取商品分类列表
     async getCateList() {
       const { data: result } = await this.$http.get('categories')
@@ -84,12 +104,6 @@ export default {
         return this.$message.error('获取商品分类失败！')
       }
       this.cateList = result.data
-    },
-    // 商品分类选择器改变事件
-    cateHandleChange() {
-      if (this.selectedCateKeys.length !== 3) {
-        this.selectedCateKeys = []
-      }
     },
     handleTabClick() {
       console.log(this.activeTabName)
@@ -100,6 +114,12 @@ export default {
     // 如果按钮需要被禁用，返回true，否则返回false
     isButtonDisabled() {
       return this.selectedCateKeys.length !== 3
+    },
+    cateId() {
+      if (this.selectedCateKeys.length === 3) {
+        return this.selectedCateKeys[2]
+      }
+      return null
     }
   }
 }
