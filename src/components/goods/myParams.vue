@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-05 09:00:03
+ * @LastEditTime: 2024-04-05 09:31:00
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -91,7 +91,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="addParams">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -177,6 +177,25 @@ export default {
     // 添加对话框关闭事件
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
+    },
+    // 添加参数事件
+    addParams() {
+      this.$refs.addFormRef.validate(async valid => {
+        if (!valid) {
+          return
+        }
+        // 添加参数
+        const { data: result } = await this.$http.post(`categories/${this.cateId}/attributes`, {
+          attr_name: this.addForm.attr_name,
+          attr_sel: this.activeTabName
+        })
+        if (result.meta.status !== 201) {
+          return this.$message.error('添加参数失败！')
+        }
+        this.$message.success('添加参数成功！')
+        this.addDialogVisible = false
+        this.getParamsData()
+      })
     },
     // 商品分类选择器改变事件
     cateHandleChange() {
