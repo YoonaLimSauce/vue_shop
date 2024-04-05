@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-05 09:31:00
+ * @LastEditTime: 2024-04-05 10:27:08
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -50,7 +50,8 @@
             <el-table-column prop="attr_name" label="参数名称"></el-table-column>
             <el-table-column label="操作">
               <template>
-                <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                <el-button type="primary" icon="el-icon-edit" size="mini"
+                  @click="showEditDialog">编辑</el-button>
                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
               </template>
             </el-table-column>
@@ -70,7 +71,8 @@
             <el-table-column prop="attr_name" label="属性名称"></el-table-column>
             <el-table-column label="操作">
               <template>
-                <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+                <el-button type="primary" icon="el-icon-edit" size="mini"
+                  @click="showEditDialog">编辑</el-button>
                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
               </template>
             </el-table-column>
@@ -79,6 +81,7 @@
       </el-tabs>
     </el-card>
 
+    <!-- 添加参数对话框 -->
     <el-dialog
       :title="'添加' + titleTest"
       :visible.sync="addDialogVisible"
@@ -92,6 +95,23 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addParams">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 编辑参数对话框 -->
+    <el-dialog
+      :title="'编辑' + titleTest"
+      :visible.sync="editDialogVisible"
+      @closed="editDialogClosed"
+      width="30%">
+      <el-form ref="editFormRef" :model="editForm" :rules="editFormRules" label-width="80px">
+        <el-form-item :label="titleTest" prop="attr_name">
+          <el-input v-model="editForm.attr_name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editParams">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -132,6 +152,15 @@ export default {
       addFormRules: {
         attr_name: [
           { required: true, message: '请输入参数名称', trigger: 'blur' }
+        ]
+      },
+      editDialogVisible: false,
+      editForm: {
+        attr_name: ''
+      },
+      editFormRules: {
+        attr_name: [
+          { required: true, message: '请输入参数名称', trigger: 'blue' }
         ]
       }
     }
@@ -201,8 +230,15 @@ export default {
     cateHandleChange() {
       this.getParamsData()
     },
+    editDialogClosed() {
+      this.$refs.editFormRef.resetFields()
+    },
+    editParams() {},
     handleTabClick() {
       this.getParamsData()
+    },
+    showEditDialog() {
+      this.editDialogVisible = true
     }
   },
   computed: {
