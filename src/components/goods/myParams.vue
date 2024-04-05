@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-04 22:32:11
+ * @LastEditTime: 2024-04-05 09:00:03
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -38,10 +38,11 @@
       <el-tabs v-model="activeTabName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
         <el-tab-pane label="动态参数" name="many">
-          <el-button type="primary" size="mini" :disabled="isButtonDisabled">添加动态参数</el-button>
+          <el-button type="primary" size="mini"
+            :disabled="isButtonDisabled"
+            @click="addDialogVisible = true">添加动态参数</el-button>
           <!-- 动态参数表格 -->
-          <el-table :data="manyTableData" border stripe
-            :key="componentKey" :ref="tableForm">
+          <el-table :data="manyTableData" border stripe>
             <!-- 展开行 -->
             <el-table-column type="expand"></el-table-column>
             <!-- 索引列 -->
@@ -57,10 +58,11 @@
         </el-tab-pane>
         <!-- 添加静态属性的面板 -->
         <el-tab-pane label="静态属性" name="only">
-          <el-button type="primary" size="mini" :disabled="isButtonDisabled">添加静态属性</el-button>
+          <el-button type="primary" size="mini"
+            :disabled="isButtonDisabled"
+            @click="addDialogVisible = true">添加静态属性</el-button>
           <!-- 静态属性表格 -->
-          <el-table :data="onlyTableData" border stripe
-            :key="componentKey" :ref="tableForm">
+          <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
             <el-table-column type="expand"></el-table-column>
             <!-- 索引列 -->
@@ -76,6 +78,22 @@
         </el-tab-pane>
       </el-tabs>
     </el-card>
+
+    <el-dialog
+      :title="'添加' + titleTest"
+      :visible.sync="addDialogVisible"
+      @closed="addDialogClosed"
+      width="30%">
+      <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="80px">
+        <el-form-item :label="titleTest" prop="attr_name">
+          <el-input v-model="addForm.attr_name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -103,7 +121,19 @@ export default {
       // 动态参数表格数据
       manyTableData: [],
       // 静态属性表格数据
-      onlyTableData: []
+      onlyTableData: [],
+      // 控制添加对话框的显示与隐藏
+      addDialogVisible: false,
+      // 添加参数的表单数据
+      addForm: {
+        attr_name: ''
+      },
+      // 添加参数的表单验证规则
+      addFormRules: {
+        attr_name: [
+          { required: true, message: '请输入参数名称', trigger: 'blur' }
+        ]
+      }
     }
   },
   created () {
@@ -144,6 +174,10 @@ export default {
         this.manyTableData = result.data
       }
     },
+    // 添加对话框关闭事件
+    addDialogClosed() {
+      this.$refs.addFormRef.resetFields()
+    },
     // 商品分类选择器改变事件
     cateHandleChange() {
       this.getParamsData()
@@ -164,6 +198,13 @@ export default {
     // 如果按钮需要被禁用，返回true，否则返回false
     isButtonDisabled() {
       return this.selectedCateKeys.length !== 3
+    },
+    titleTest() {
+      if (this.activeTabName === 'many') {
+        return '动态参数'
+      } else {
+        return '静态属性'
+      }
     }
   }
 }
