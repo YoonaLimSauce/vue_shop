@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-05 10:27:08
+ * @LastEditTime: 2024-04-05 10:58:02
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -49,9 +49,9 @@
             <el-table-column type="index"></el-table-column>
             <el-table-column prop="attr_name" label="参数名称"></el-table-column>
             <el-table-column label="操作">
-              <template>
+              <template slot-scope="scope">
                 <el-button type="primary" icon="el-icon-edit" size="mini"
-                  @click="showEditDialog">编辑</el-button>
+                  @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
               </template>
             </el-table-column>
@@ -70,9 +70,9 @@
             <el-table-column type="index"></el-table-column>
             <el-table-column prop="attr_name" label="属性名称"></el-table-column>
             <el-table-column label="操作">
-              <template>
+              <template slot-scope="scope">
                 <el-button type="primary" icon="el-icon-edit" size="mini"
-                  @click="showEditDialog">编辑</el-button>
+                  @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
                 <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
               </template>
             </el-table-column>
@@ -230,14 +230,48 @@ export default {
     cateHandleChange() {
       this.getParamsData()
     },
+    // 编辑对话框关闭事件
     editDialogClosed() {
       this.$refs.editFormRef.resetFields()
     },
-    editParams() {},
+    // 编辑参数事件
+    editParams() {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) {
+          return
+        }
+        // 编辑参数
+        const { data: result } = await this.$http.put(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`, {
+          attr_name: this.editForm.attr_name,
+          attr_sel: this.activeTabName
+        })
+        if (result.meta.status !== 200) {
+          return this.$message.error('编辑参数失败！')
+        }
+        this.$message.success('编辑参数成功！')
+        this.editDialogVisible = false
+        this.getParamsData()
+      })
+    },
+    // Tab标签点击事件
     handleTabClick() {
       this.getParamsData()
     },
-    showEditDialog() {
+    // 显示编辑对话框
+    async showEditDialog(attrId) {
+      // 根据参数id获取参数数据
+      const { data: result } = await this.$http.get(`categories/${this.cateId}/attributes/${attrId}`, {
+        params: {
+          attr_sel: this.activeTabName
+        }
+      })
+
+      // 判断获取参数数据是否成功
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取参数失败！')
+      }
+
+      this.editForm = result.data
       this.editDialogVisible = true
     }
   },
