@@ -30,13 +30,37 @@ export default {
   data () {
     return {
       // Data properties go here
+      // 商品列表数据查询参数对象
+      queryInfo: {
+        query: '',
+        pagenum: 1,
+        pagesize: 10
+      },
+      // 商品列表数据
+      goodsList: [],
+      // 商品列表数据总数
+      total: 0
     }
   },
   created () {
     // Run here when project is created
+    this.getGoodsList()
   },
   methods: {
     // Component methods go here
+    // 获取商品列表数据
+    async getGoodsList() {
+      const { data: result } = await this.$http.get('goods', {
+        params: this.queryInfo
+      })
+
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取商品列表数据失败！')
+      }
+
+      this.goodsList = result.data.goods
+      this.total = result.data.total
+    }
   }
 }
 </script>
