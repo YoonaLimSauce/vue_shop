@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-06 11:56:53
+ * @LastEditTime: 2024-04-06 13:03:22
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -44,7 +44,11 @@
           <!-- 动态参数表格 -->
           <el-table :data="manyTableData" border stripe>
             <!-- 展开行 -->
-            <el-table-column type="expand"></el-table-column>
+            <el-table-column type="expand">
+              <template slot-scope="scope">
+                <el-tag v-for="(item, index) in scope.row.attr_vals" :key="index" closable>{{ item }}</el-tag>
+              </template>
+            </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
             <el-table-column prop="attr_name" label="参数名称"></el-table-column>
@@ -199,6 +203,15 @@ export default {
       if (result.meta.status !== 200) {
         return this.$message.error('获取参数列表失败！')
       }
+
+      // 处理attr_vals字段，将字符串转换为数组
+      result.data.forEach(
+        (item) => {
+          item.attr_vals = item.attr_vals ? item.attr_vals.split(/\s+/) : []
+        }
+      )
+
+      // 根据当前激活的tab标签，将数据赋值给对应的表格数据
       if (this.activeTabName === 'only') {
         this.onlyTableData = result.data
       } else {
@@ -331,5 +344,8 @@ export default {
 .select-cate-row {
   margin: 20px 0;
   font-size: 15px;
+}
+.el-tag {
+  margin: 10px;
 }
 </style>
