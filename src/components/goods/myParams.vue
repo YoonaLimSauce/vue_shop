@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-06 22:11:43
+ * @LastEditTime: 2024-04-06 23:18:13
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -89,7 +89,8 @@
             <el-table-column type="expand">
               <template slot-scope="scope">
                 <!-- 循环attr_vals数组，渲染标签 -->
-                <el-tag v-for="(item, index) in scope.row.attr_vals" :key="index" closable>{{ item }}</el-tag>
+                <el-tag v-for="(item, index) in scope.row.attr_vals" :key="index" closable
+                  @close="handleCloseTag(scope.row, index)">{{ item }}</el-tag>
                 <!-- 添加标签的输入框 -->
                 <el-input
                   class="input-new-tag"
@@ -104,7 +105,7 @@
                 </el-input>
                 <!-- 添加按钮 -->
                 <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
-              </template>
+              </template>21
             </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
@@ -216,7 +217,7 @@ export default {
   methods: {
     // Component methods go here
     // 保存标签数据
-    async saveAttrVals(row) {
+    async saveAttrVals(row, options) {
       const { data: result } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
         attr_name: row.attr_name,
         // attr_sel: this.activeTabName,
@@ -225,10 +226,22 @@ export default {
         attr_vals: row.attr_vals.join(' ')
       })
 
-      if (result.meta.status !== 200) {
-        return this.$message.error('添加标签失败！')
+      if (options === 'add') {
+        if (result.meta.status !== 200) {
+          return this.$message.error('添加标签失败！')
+        }
+        this.$message.success('添加标签成功！')
+      } else if (options === 'delete') {
+        if (result.meta.status !== 200) {
+          return this.$message.error('删除标签失败！')
+        }
+        this.$message.success('删除标签成功！')
+      } else {
+        if (result.meta.status !== 200) {
+          return this.$message.error('操作失败！')
+        }
+        this.$message.success('操作成功！')
       }
-      this.$message.success('添加标签成功！')
     },
     // 获取商品分类列表
     async getCateList() {
@@ -287,7 +300,7 @@ export default {
       row.inputVisible = false
 
       // 没有return，说明输入框有值
-      this.saveAttrVals(row)
+      this.saveAttrVals(row, 'add')
     },
     // 删除参数事件
     async removeParams(attrId) {
@@ -384,7 +397,7 @@ export default {
     // 关闭标签事件
     handleCloseTag(row, index) {
       row.attr_vals.splice(index, 1)
-      this.saveAttrVals(row)
+      this.saveAttrVals(row, 'delete')
     },
     // Tab标签点击事件
     handleTabClick() {
