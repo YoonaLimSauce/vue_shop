@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-06 13:03:22
+ * @LastEditTime: 2024-04-06 14:57:40
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -42,11 +42,25 @@
             :disabled="isButtonDisabled"
             @click="addDialogVisible = true">添加动态参数</el-button>
           <!-- 动态参数表格 -->
-          <el-table :data="manyTableData" border stripe>
+          <el-table :data="manyTableData" row-key="attr_id" border stripe>
             <!-- 展开行 -->
             <el-table-column type="expand">
               <template slot-scope="scope">
+                <!-- 循环attr_vals数组，渲染标签 -->
                 <el-tag v-for="(item, index) in scope.row.attr_vals" :key="index" closable>{{ item }}</el-tag>
+                <!-- 添加标签的输入框 -->
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.inputValue"
+                  ref="saveTagInput"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm"
+                  @blur="handleInputConfirm"
+                >
+                </el-input>
+                <!-- 添加按钮 -->
+                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
               </template>
             </el-table-column>
             <!-- 索引列 -->
@@ -168,7 +182,10 @@ export default {
         attr_name: [
           { required: true, message: '请输入参数名称', trigger: 'blue' }
         ]
-      }
+      },
+      // 标签输入框相关数据
+      inputVisible: false,
+      inputValue: ''
     }
   },
   created () {
@@ -208,6 +225,8 @@ export default {
       result.data.forEach(
         (item) => {
           item.attr_vals = item.attr_vals ? item.attr_vals.split(/\s+/) : []
+          this.$set(item, 'inputVisible', false)
+          this.$set(item, 'inputValue', '')
         }
       )
 
@@ -242,6 +261,23 @@ export default {
       }
       this.$message.success('删除参数成功！')
       this.getParamsData()
+    },
+    // 显示编辑对话框
+    async showEditDialog(attrId) {
+      // 根据参数id获取参数数据
+      const { data: result } = await this.$http.get(`categories/${this.cateId}/attributes/${attrId}`, {
+        params: {
+          attr_sel: this.activeTabName
+        }
+      })
+
+      // 判断获取参数数据是否成功
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取参数失败！')
+      }
+
+      this.editForm = result.data
+      this.editDialogVisible = true
     },
     // 添加对话框关闭事件
     addDialogClosed() {
@@ -293,26 +329,15 @@ export default {
         this.getParamsData()
       })
     },
+    // 显示标签输入框
+    handleInputConfirm() {},
     // Tab标签点击事件
     handleTabClick() {
       this.getParamsData()
     },
-    // 显示编辑对话框
-    async showEditDialog(attrId) {
-      // 根据参数id获取参数数据
-      const { data: result } = await this.$http.get(`categories/${this.cateId}/attributes/${attrId}`, {
-        params: {
-          attr_sel: this.activeTabName
-        }
-      })
-
-      // 判断获取参数数据是否成功
-      if (result.meta.status !== 200) {
-        return this.$message.error('获取参数失败！')
-      }
-
-      this.editForm = result.data
-      this.editDialogVisible = true
+    // 点击按钮，显示标签输入框
+    showInput(row) {
+      row.inputVisible = true
     }
   },
   computed: {
@@ -346,6 +371,10 @@ export default {
   font-size: 15px;
 }
 .el-tag {
+  margin: 10px;
+}
+.input-new-tag {
+  width: 150px;
   margin: 10px;
 }
 </style>
