@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-05 10:58:02
+ * @LastEditTime: 2024-04-06 11:56:53
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -52,7 +52,8 @@
               <template slot-scope="scope">
                 <el-button type="primary" icon="el-icon-edit" size="mini"
                   @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
-                <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                <el-button type="danger" icon="el-icon-delete" size="mini"
+                  @click="removeParams(scope.row.attr_id)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -73,7 +74,8 @@
               <template slot-scope="scope">
                 <el-button type="primary" icon="el-icon-edit" size="mini"
                   @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
-                <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+                <el-button type="danger" icon="el-icon-delete" size="mini"
+                  @click="removeParams(scope.row.attr_id)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -202,6 +204,31 @@ export default {
       } else {
         this.manyTableData = result.data
       }
+    },
+    // 删除参数事件
+    async removeParams(attrId) {
+      const confirmResult = await this.$confirm('是否删除该参数？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(
+        (error) => {
+          return error
+        }
+      )
+
+      // 判断用户点击的是取消
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('已取消删除！')
+      }
+
+      // 删除参数业务逻辑
+      const { data: result } = await this.$http.delete(`categories/${this.cateId}/attributes/${attrId}`)
+      if (result.meta.status !== 200) {
+        return this.$message.error('删除参数失败！')
+      }
+      this.$message.success('删除参数成功！')
+      this.getParamsData()
     },
     // 添加对话框关闭事件
     addDialogClosed() {
