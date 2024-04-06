@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-06 15:58:07
+ * @LastEditTime: 2024-04-06 21:58:04
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -85,7 +85,26 @@
           <!-- 静态属性表格 -->
           <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
-            <el-table-column type="expand"></el-table-column>
+            <el-table-column type="expand">
+              <template slot-scope="scope">
+                <!-- 循环attr_vals数组，渲染标签 -->
+                <el-tag v-for="(item, index) in scope.row.attr_vals" :key="index" closable>{{ item }}</el-tag>
+                <!-- 添加标签的输入框 -->
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.inputValue"
+                  v-model.trim="scope.row.inputValue"
+                  ref="saveTagInput"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm(scope.row)"
+                  @blur="handleInputConfirm(scope.row)"
+                >
+                </el-input>
+                <!-- 添加按钮 -->
+                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
+              </template>
+            </el-table-column>
             <!-- 索引列 -->
             <el-table-column type="index"></el-table-column>
             <el-table-column prop="attr_name" label="属性名称"></el-table-column>
@@ -238,6 +257,34 @@ export default {
         this.manyTableData = result.data
       }
     },
+    // 显示标签输入框
+    // 文本框失去焦点或者按下回车键时触发
+    async handleInputConfirm(row) {
+      if (row.inputValue.trim().length === 0) {
+        row.inputValue = ''
+        row.inputVisible = false
+        return
+      }
+
+      row.attr_vals.push(row.inputValue.trim())
+      row.inputValue = ''
+      row.inputVisible = false
+
+      // 没有return，说明输入框有值
+      const { data: result } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
+        attr_name: row.attr_name,
+        // attr_sel: this.activeTabName,
+        attr_sel: row.attr_sel,
+        // attr_vals: [...row.attr_vals, row.inputValue.join(' ')]
+        attr_vals: row.attr_vals.join(' ')
+      })
+
+      if (result.meta.status !== 200) {
+        return this.$message.error('添加标签失败！')
+      }
+      this.$message.success('添加标签成功！')
+      // this.getParamsData()
+    },
     // 删除参数事件
     async removeParams(attrId) {
       const confirmResult = await this.$confirm('是否删除该参数？', '提示', {
@@ -329,18 +376,6 @@ export default {
         this.editDialogVisible = false
         this.getParamsData()
       })
-    },
-    // 显示标签输入框
-    // 文本框失去焦点或者按下回车键时触发
-    handleInputConfirm(row) {
-      if (row.inputValue.trim().length === 0) {
-        row.inputValue = ''
-        row.inputVisible = false
-        return
-      }
-
-      // 没有return，说明输入框有值
-      console.log('hello world')
     },
     // Tab标签点击事件
     handleTabClick() {
