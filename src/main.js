@@ -1,8 +1,8 @@
 /*
  * @Author: yoonalimsauce miraclefishleong@gmail.com
  * @Date: 2024-03-11 22:54:47
- * @LastEditors: 林允儿 Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-03-16 01:08:42
+ * @LastEditors: Yoona Lim miraclefishleong@gmail.com
+ * @LastEditTime: 2024-04-07 06:49:24
  * @FilePath: \vue-shop\src\main.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -33,6 +33,20 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 Vue.component('tree-table', TreeTable)
+
+Vue.filter('dateFormat', function(originDataValue) {
+  const dateTime = new Date(originDataValue)
+
+  const year = dateTime.getFullYear()
+  const month = (dateTime.getMonth() + 1 + '').padStart(2, '0')
+  const day = (dateTime.getDate() + '').padStart(2, '0')
+
+  const hour = (dateTime.getHours() + '').padStart(2, '0')
+  const minute = (dateTime.getMinutes() + '').padStart(2, '0')
+  const second = (dateTime.getSeconds() + '').padStart(2, '0')
+
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+})
 
 new Vue({
   router,

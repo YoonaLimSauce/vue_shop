@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 00:30:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-07 06:38:19
+ * @LastEditTime: 2024-04-07 06:49:56
  * @FilePath: \vue_shop\src\components\goods\myList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -33,7 +33,11 @@
         <el-table-column label="商品名称" prop="goods_name"></el-table-column>
         <el-table-column label="商品价格(元)" prop="goods_price" width="95px"></el-table-column>
         <el-table-column label="商品重量" prop="goods_weight" width="70px"></el-table-column>
-        <el-table-column label="创建时间" prop="add_time" width="140px"></el-table-column>
+        <el-table-column label="创建时间" prop="add_time" width="140px">
+          <template slot-scope="scope">
+            {{ scope.row.add_time | dateFormat }}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="200px">
           <template>
             <div style="display: flex; justify-content: center; align-items: center">
