@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-01 00:31:17
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-06 14:57:40
+ * @LastEditTime: 2024-04-06 15:58:07
  * @FilePath: \vue_shop\src\components\goods\myParams.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -53,10 +53,11 @@
                   class="input-new-tag"
                   v-if="scope.row.inputVisible"
                   v-model="scope.row.inputValue"
+                  v-model.trim="scope.row.inputValue"
                   ref="saveTagInput"
                   size="small"
-                  @keyup.enter.native="handleInputConfirm"
-                  @blur="handleInputConfirm"
+                  @keyup.enter.native="handleInputConfirm(scope.row)"
+                  @blur="handleInputConfirm(scope.row)"
                 >
                 </el-input>
                 <!-- 添加按钮 -->
@@ -330,7 +331,17 @@ export default {
       })
     },
     // 显示标签输入框
-    handleInputConfirm() {},
+    // 文本框失去焦点或者按下回车键时触发
+    handleInputConfirm(row) {
+      if (row.inputValue.trim().length === 0) {
+        row.inputValue = ''
+        row.inputVisible = false
+        return
+      }
+
+      // 没有return，说明输入框有值
+      console.log('hello world')
+    },
     // Tab标签点击事件
     handleTabClick() {
       this.getParamsData()
@@ -338,6 +349,10 @@ export default {
     // 点击按钮，显示标签输入框
     showInput(row) {
       row.inputVisible = true
+      this.$nextTick((_) => {
+        // this.$refs.saveTagInput.$refs.input.focus()
+        this.$refs.saveTagInput.focus()
+      })
     }
   },
   computed: {
