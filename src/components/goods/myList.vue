@@ -1,3 +1,11 @@
+<!--
+ * @Author: Yoona Lim miraclefishleong@gmail.com
+ * @Date: 2024-04-07 00:30:27
+ * @LastEditors: Yoona Lim miraclefishleong@gmail.com
+ * @LastEditTime: 2024-04-07 06:38:19
+ * @FilePath: \vue_shop\src\components\goods\myList.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div>
     <!-- Component HTML goes here -->
@@ -20,6 +28,21 @@
           <el-button type="primary" icon="el-icon-plus">添加商品</el-button>
         </el-col>
       </el-row>
+      <el-table :data="goodsList" border stripe>
+        <el-table-column type="index"></el-table-column>
+        <el-table-column label="商品名称" prop="goods_name"></el-table-column>
+        <el-table-column label="商品价格(元)" prop="goods_price" width="95px"></el-table-column>
+        <el-table-column label="商品重量" prop="goods_weight" width="70px"></el-table-column>
+        <el-table-column label="创建时间" prop="add_time" width="140px"></el-table-column>
+        <el-table-column label="操作" width="200px">
+          <template>
+            <div style="display: flex; justify-content: center; align-items: center">
+              <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
+              <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-card>
   </div>
 </template>
