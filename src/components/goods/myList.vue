@@ -18,6 +18,7 @@
 
     <!-- Card 卡片视图区域 -->
     <el-card>
+      <!-- 搜索和添加商品区域 -->
       <el-row :gutter="20">
         <el-col :span="8">
           <el-input placeholder="请输入内容" class="input-with-select">
@@ -28,6 +29,8 @@
           <el-button type="primary" icon="el-icon-plus">添加商品</el-button>
         </el-col>
       </el-row>
+
+      <!-- 商品列表区域 -->
       <el-table :data="goodsList" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column label="商品名称" prop="goods_name"></el-table-column>
@@ -47,6 +50,18 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <!-- 分页区域 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        background>
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -85,8 +100,17 @@ export default {
         return this.$message.error('获取商品列表数据失败！')
       }
 
+      this.$message.success('获取商品列表数据成功！')
       this.goodsList = result.data.goods
       this.total = result.data.total
+    },
+    handleCurrentChange(newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getGoodsList()
+    },
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getGoodsList()
     }
   }
 }
