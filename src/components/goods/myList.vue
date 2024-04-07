@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 00:30:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-07 06:49:56
+ * @LastEditTime: 2024-04-07 22:13:14
  * @FilePath: \vue_shop\src\components\goods\myList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -23,6 +23,8 @@
         <el-col :span="8">
           <el-input placeholder="请输入内容" class="input-with-select" v-model="queryInfo.query" clearable
             @clear="getGoodsList">
+          <!-- <el-input placeholder="请输入内容" class="input-with-select" v-model="queryInfo.query" clearable
+            @clear="getGoodsList" @input="getGoodsList"> -->
             <el-button slot="append" icon="el-icon-search"
               @click="getGoodsList"></el-button>
           </el-input>
@@ -44,10 +46,11 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="200px">
-          <template>
+          <template slot-scope="scope">
             <div style="display: flex; justify-content: center; align-items: center">
               <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
-              <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+              <el-button type="danger" icon="el-icon-delete" size="mini"
+                @click="removeByID(scope.row.goods_id)">删除</el-button>
             </div>
           </template>
         </el-table-column>
@@ -105,6 +108,29 @@ export default {
       this.$message.success('获取商品列表数据成功！')
       this.goodsList = result.data.goods
       this.total = result.data.total
+    },
+    async removeByID(id) {
+      const confirmResult = await this.$confirm('是否删除该商品？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(
+        (error) => {
+          return error
+        }
+      )
+
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('取消删除商品！')
+      }
+
+      const { data: result } = await this.$http.delete(`goods/${id}`)
+      if (result.meta.status !== 200) {
+        return this.$message.error('删除商品失败！')
+      }
+
+      this.$message.success('删除商品成功！')
+      this.getGoodsList()
     },
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage
