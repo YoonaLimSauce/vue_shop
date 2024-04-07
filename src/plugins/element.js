@@ -11,7 +11,7 @@ import {
   Button, Form, FormItem, Input, Message, Tag, Tree, Select, Option, Cascader, Alert,
   Container, Header, Aside, Main, Footer, Menu, Submenu, MenuItem, MenuItemGroup,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, TabPane, Tabs,
-  Switch, Tooltip, Pagination, Dialog, MessageBox
+  Switch, Tooltip, Pagination, Dialog, MessageBox, Steps, Step
 } from 'element-ui'
 
 Vue.use(Button)
@@ -46,6 +46,8 @@ Vue.use(Cascader)
 Vue.use(Alert)
 Vue.use(Tabs)
 Vue.use(TabPane)
+Vue.use(Steps)
+Vue.use(Step)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
