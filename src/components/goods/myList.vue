@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 00:30:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-07 22:13:14
+ * @LastEditTime: 2024-04-07 22:20:28
  * @FilePath: \vue_shop\src\components\goods\myList.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -30,7 +30,8 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" icon="el-icon-plus">添加商品</el-button>
+          <el-button type="primary" icon="el-icon-plus"
+            @click="goAddPage">添加商品</el-button>
         </el-col>
       </el-row>
 
@@ -131,6 +132,9 @@ export default {
 
       this.$message.success('删除商品成功！')
       this.getGoodsList()
+    },
+    goAddPage() {
+      this.$router.push('/goods/add')
     },
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage
