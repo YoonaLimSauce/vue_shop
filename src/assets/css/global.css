@@ -18,3 +18,9 @@ html, body, #app {
 .el-cascader-menu {
     height: 300px;
 }
+.el-steps {
+    margin-top: 15px;
+}
+.el-step__title {
+    font-size: 13px;
+}
