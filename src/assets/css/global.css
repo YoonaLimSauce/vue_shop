@@ -20,6 +20,7 @@ html, body, #app {
 }
 .el-steps {
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 .el-step__title {
     font-size: 13px;
