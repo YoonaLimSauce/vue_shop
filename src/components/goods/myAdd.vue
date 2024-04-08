@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-08 21:25:59
+ * @LastEditTime: 2024-04-09 00:31:35
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -32,7 +32,9 @@
 
       <!-- 左侧竖直标签页 -->
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
-        <el-tabs v-model="activeIndex" :tab-position="'left'">
+        <el-tabs v-model="activeIndex" :tab-position="'left'"
+          :before-leave="beforeTabLeave"
+          @tab-click="tabClicked">
           <el-tab-pane label="基本信息" name="0">
             <el-form-item label="基本信息" prop="goods_name">
               <el-input v-model="addForm.goods_name" placeholder="请输入商品名称"></el-input>
@@ -110,12 +112,21 @@ export default {
         value: 'cat_id',
         children: 'children',
         checkStrictly: false
-      }
+      },
+      manyTableData: []
     }
   },
   created () {
     // Run here when project is created
     this.getCateList()
+  },
+  computed: {
+    cateID() {
+      if (this.addForm.goods_cat.length === 3) {
+        return this.addForm.goods_cat[2]
+      }
+      return null
+    }
   },
   methods: {
     // Component methods go here
@@ -130,6 +141,27 @@ export default {
         return this.$message.error('获取商品分类数据失败')
       }
       this.cateList = result.data
+    },
+    async tabClicked() {
+      if (this.activeIndex === '1') {
+        const { data: result } = await this.$http.get(`/categories/${this.cateID}/attributes`, {
+          params: {
+            sel: 'many'
+          }
+        })
+        if (result.meta.status !== 200) {
+          return this.$message.error('获取商品参数失败')
+        }
+        this.manyTableData = result.data
+      }
+      console.log(this.manyTableData)
+    },
+    beforeTabLeave(activeIndex, oldActiveIndex) {
+      if (this.addForm.goods_cat.length !== 3 && oldActiveIndex === '0') {
+        this.$message.error('请先选择商品分类')
+        return false
+      }
+      return true
     },
     handleChange() {
       if (this.addForm.goods_cat.length !== 3) {
