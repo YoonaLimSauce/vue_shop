@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-08 00:22:27
+ * @LastEditTime: 2024-04-08 21:00:45
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -46,6 +46,13 @@
             <el-form-item label="商品数量" prop="goods_number">
               <el-input v-model="addForm.goods_number" placeholder="请输入商品数量"></el-input>
             </el-form-item>
+            <el-form-item label="商品分类" prop="goods_cat">
+              <el-cascader
+                v-model="addForm.goods_cat"
+                :options="cateList"
+                :props="cateProps"
+                @change="handleChange"></el-cascader>
+            </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="商品参数" name="1">商品参数
           </el-tab-pane>
@@ -73,7 +80,8 @@ export default {
         goods_price: 0,
         goods_weight: 0,
         goods_number: 0,
-        goods_introduce: ''
+        goods_introduce: '',
+        goods_cat: []
       },
       addFormRules: {
         goods_name: [
@@ -90,9 +98,18 @@ export default {
         ],
         goods_introduce: [
           { required: true, message: '请输入商品描述', trigger: 'blur' }
+        ],
+        goods_cat: [
+          { required: true, message: '请选择商品分类', trigger: 'blur' }
         ]
       },
-      cateList: []
+      cateList: [],
+      cateProps: {
+        expandTrigger: 'hover',
+        label: 'cat_name',
+        value: 'cat_id',
+        children: 'children'
+      }
     }
   },
   created () {
@@ -113,6 +130,9 @@ export default {
       }
       this.cateList = result.data
       console.log(this.cateList)
+    },
+    handleChange() {
+      console.log(this.addForm.goods_cat)
     }
   }
 }
