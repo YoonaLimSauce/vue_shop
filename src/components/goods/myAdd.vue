@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-08 21:00:45
+ * @LastEditTime: 2024-04-08 21:25:59
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -108,7 +108,8 @@ export default {
         expandTrigger: 'hover',
         label: 'cat_name',
         value: 'cat_id',
-        children: 'children'
+        children: 'children',
+        checkStrictly: false
       }
     }
   },
@@ -129,10 +130,11 @@ export default {
         return this.$message.error('获取商品分类数据失败')
       }
       this.cateList = result.data
-      console.log(this.cateList)
     },
     handleChange() {
-      console.log(this.addForm.goods_cat)
+      if (this.addForm.goods_cat.length !== 3) {
+        this.addForm.goods_cat = []
+      }
     }
   }
 }
