@@ -91,14 +91,29 @@ export default {
         goods_introduce: [
           { required: true, message: '请输入商品描述', trigger: 'blur' }
         ]
-      }
+      },
+      cateList: []
     }
   },
   created () {
     // Run here when project is created
+    this.getCateList()
   },
   methods: {
     // Component methods go here
+    // 获取所有商品分类数据
+    async getCateList() {
+      const { data: result } = await this.$http.get('/categories', {
+        params: {
+          type: 3
+        }
+      })
+      if (result.meta.status !== 200) {
+        return this.$message.error('获取商品分类数据失败')
+      }
+      this.cateList = result.data
+      console.log(this.cateList)
+    }
   }
 }
 </script>
