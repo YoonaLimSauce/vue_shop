@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-09 23:50:44
+ * @LastEditTime: 2024-04-10 00:36:14
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -74,6 +74,7 @@
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               :headers="headerObj"
+              :on-success="handleSuccess"
               list-type="picture">
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
@@ -99,7 +100,8 @@ export default {
         goods_weight: 0,
         goods_number: 0,
         goods_introduce: '',
-        goods_cat: []
+        goods_cat: [],
+        pics: []
       },
       addFormRules: {
         goods_name: [
@@ -205,8 +207,23 @@ export default {
         this.addForm.goods_cat = []
       }
     },
+    // 处理图片预览效果
     handlePreview() {},
-    handleRemove() {}
+    // 处理移除图片的操作
+    handleRemove(file) {
+      const filePath = file.response.data.tmp_path
+      const removeIndex = this.addForm.pics.findIndex((item) => item.pic === filePath)
+      this.addForm.pics.splice(removeIndex, 1)
+      // const removeIndex = this.addForm.pics.findIndex((item) => item.pic === file.response.data.tmp_path)
+      // this.addForm.pics.splice(removeIndex, 1)
+    },
+    // 监听图片上传成功的事件
+    handleSuccess(Response) {
+      const picInfo = {
+        pic: Response.data.tmp_path
+      }
+      this.addForm.pics.push(picInfo)
+    }
   }
 }
 </script>
