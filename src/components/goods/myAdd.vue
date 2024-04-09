@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-09 23:30:05
+ * @LastEditTime: 2024-04-09 23:35:01
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -63,7 +63,10 @@
               </el-checkbox-group>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品属性" name="2">商品属性
+          <el-tab-pane label="商品属性" name="2">
+            <el-form-item v-for="item in onlyTableData" :key="item.attr_id" :label="item.attr_name">
+              <el-input v-model="item.attr_vals" placeholder="请输出商品属性值"></el-input>
+            </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="商品图片" name="3">商品图片
           </el-tab-pane>
