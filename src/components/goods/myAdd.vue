@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-09 21:51:57
+ * @LastEditTime: 2024-04-09 23:30:05
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -118,7 +118,8 @@ export default {
         children: 'children',
         checkStrictly: false
       },
-      manyTableData: []
+      manyTableData: [],
+      onlyTableData: []
     }
   },
   created () {
@@ -164,6 +165,16 @@ export default {
             item.attr_vals = item.attr_vals === null ? [] : item.attr_vals.split(' ')
           }
         )
+      } else if (this.activeIndex === '2') {
+        const { data: result } = await this.$http.get(`/categories/${this.cateID}/attributes`, {
+          params: {
+            sel: 'only'
+          }
+        })
+        if (result.meta.status !== 200) {
+          return this.$message.error('获取商品属性失败')
+        }
+        this.onlyTableData = result.data
       }
     },
     beforeTabLeave(activeIndex, oldActiveIndex) {
@@ -184,4 +195,7 @@ export default {
 
 <style lang="less" scoped>
 /* Component CSS goes here */
+.el-checkbox {
+  margin: 0 5px 0 0 !important;
+}
 </style>
