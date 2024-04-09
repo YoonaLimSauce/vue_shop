@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-09 23:43:47
+ * @LastEditTime: 2024-04-09 23:50:44
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -73,6 +73,7 @@
               :action="uploadURL"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
+              :headers="headerObj"
               list-type="picture">
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
@@ -130,7 +131,11 @@ export default {
       },
       manyTableData: [],
       onlyTableData: [],
-      uploadURL: 'http://127.0.0.1:8888/api/private/v1/upload'
+      // 上传图片的URL
+      uploadURL: 'http://127.0.0.1:8888/api/private/v1/upload',
+      headerObj: {
+        Authorization: window.sessionStorage.getItem('token')
+      }
     }
   },
   created () {
