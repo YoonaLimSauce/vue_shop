@@ -9,7 +9,7 @@
 import Vue from 'vue'
 import {
   Button, Form, FormItem, Input, Message, Tag, Tree, Select, Option, Cascader, Alert,
-  Container, Header, Aside, Main, Footer, Menu, Submenu, MenuItem, MenuItemGroup,
+  Container, Header, Aside, Main, Footer, Menu, Submenu, MenuItem, MenuItemGroup, Upload,
   Breadcrumb, BreadcrumbItem, Card, Row, Col, Table, TableColumn, TabPane, Tabs,
   Switch, Tooltip, Pagination, Dialog, MessageBox, Steps, Step, CheckboxGroup, Checkbox
 } from 'element-ui'
@@ -50,6 +50,7 @@ Vue.use(Steps)
 Vue.use(Step)
 Vue.use(CheckboxGroup)
 Vue.use(Checkbox)
+Vue.use(Upload)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
