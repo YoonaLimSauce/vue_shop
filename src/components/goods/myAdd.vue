@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-09 00:31:35
+ * @LastEditTime: 2024-04-09 21:51:57
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -56,7 +56,12 @@
                 @change="handleChange"></el-cascader>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品参数" name="1">商品参数
+          <el-tab-pane label="商品参数" name="1">
+            <el-form-item v-for="item in manyTableData" :key="item.attr_id" :label="item.attr_name">
+              <el-checkbox-group v-model="item.attr_vals">
+                <el-checkbox v-for="(item, index) in item.attr_vals" :label="item" :key="index" border></el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
           </el-tab-pane>
           <el-tab-pane label="商品属性" name="2">商品属性
           </el-tab-pane>
@@ -153,8 +158,13 @@ export default {
           return this.$message.error('获取商品参数失败')
         }
         this.manyTableData = result.data
+
+        this.manyTableData.forEach(
+          (item) => {
+            item.attr_vals = item.attr_vals === null ? [] : item.attr_vals.split(' ')
+          }
+        )
       }
-      console.log(this.manyTableData)
     },
     beforeTabLeave(activeIndex, oldActiveIndex) {
       if (this.addForm.goods_cat.length !== 3 && oldActiveIndex === '0') {
