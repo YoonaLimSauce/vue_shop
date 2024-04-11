@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-11 23:03:23
+ * @LastEditTime: 2024-04-12 00:04:25
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -107,6 +107,7 @@ export default {
       // 当前激活的步骤
       activeIndex: 0,
       addForm: {
+        attrs: [],
         goods_name: '',
         goods_price: 0,
         goods_weight: 0,
@@ -181,6 +182,30 @@ export default {
           }
           const form = lodash.cloneDeep(this.addForm)
           form.goods_cat = form.goods_cat.join(',')
+          if (this.manyTableData.length === 0 || this.onlyTableData.length === 0) {
+            return this.$message.error('请填写商品参数和商品属性')
+          }
+          this.manyTableData.forEach(
+            (item) => {
+              const newInfo = {
+                attr_id: item.attr_id,
+                attr_value: item.attr_vals.join(' ')
+              }
+              form.attrs.push(newInfo)
+              // this.addForm.attrs.push(newInfo)
+            }
+          )
+          this.onlyTableData.forEach(
+            (item) => {
+              const newInfo = {
+                attr_id: item.attr_id,
+                attr_value: item.attr_vals
+              }
+              form.attrs.push(newInfo)
+              // this.addForm.attrs.push(newInfo)
+            }
+          )
+          // form.attrs = this.addForm.attrs
         }
       )
     },
