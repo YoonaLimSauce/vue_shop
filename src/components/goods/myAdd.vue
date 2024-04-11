@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-11 22:15:14
+ * @LastEditTime: 2024-04-11 22:33:44
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -79,7 +79,10 @@
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
           </el-tab-pane>
-          <el-tab-pane label="商品内容" name="4">商品内容</el-tab-pane>
+          <el-tab-pane label="商品内容" name="4">
+            <quill-editor v-model="addForm.goods_introduce"></quill-editor>
+            <el-button type="primary" class="addGoodsButton">添加商品</el-button>
+          </el-tab-pane>
         </el-tabs>
       </el-form>
     </el-card>
@@ -107,8 +110,11 @@ export default {
         goods_price: 0,
         goods_weight: 0,
         goods_number: 0,
+        // 商品的详情描述
         goods_introduce: '',
+        // 商品所属的分类数组
         goods_cat: [],
+        // 图片的数组
         pics: []
       },
       addFormRules: {
@@ -249,5 +255,8 @@ export default {
 }
 .previewImg {
   width: 100%;
+}
+.addGoodsButton {
+  margin-top: 15px;
 }
 </style>
