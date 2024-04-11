@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-12 00:04:25
+ * @LastEditTime: 2024-04-12 00:16:20
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -176,7 +176,7 @@ export default {
     // 添加商品
     async addGoods() {
       this.$refs.addFormRef.validate(
-        (valid) => {
+        async (valid) => {
           if (!valid) {
             return this.$message.error('请检查必要的表单数据')
           }
@@ -206,6 +206,13 @@ export default {
             }
           )
           // form.attrs = this.addForm.attrs
+          const { data: result } = await this.$http.post('goods', form)
+          console.log(result)
+          if (result.meta.status !== 201) {
+            return this.$message.error('添加商品失败')
+          }
+          this.$message.success('添加商品成功')
+          this.$router.push('/goods')
         }
       )
     },
