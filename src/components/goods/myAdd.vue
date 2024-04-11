@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-11 22:33:44
+ * @LastEditTime: 2024-04-11 22:39:14
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -81,7 +81,7 @@
           </el-tab-pane>
           <el-tab-pane label="商品内容" name="4">
             <quill-editor v-model="addForm.goods_introduce"></quill-editor>
-            <el-button type="primary" class="addGoodsButton">添加商品</el-button>
+            <el-button type="primary" class="addGoodsButton" @click="addGoods">添加商品</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -182,6 +182,15 @@ export default {
         return this.$message.error('获取商品分类数据失败')
       }
       this.cateList = result.data
+    },
+    async addGoods() {
+      this.$refs.addFormRef.validate(
+        (valid) => {
+          if (!valid) {
+            return this.$message.error('请检查表单数据')
+          }
+        }
+      )
     },
     async tabClicked() {
       if (this.activeIndex === '1') {
