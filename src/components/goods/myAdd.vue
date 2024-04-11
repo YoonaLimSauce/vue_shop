@@ -2,7 +2,7 @@
  * @Author: Yoona Lim miraclefishleong@gmail.com
  * @Date: 2024-04-07 22:19:27
  * @LastEditors: Yoona Lim miraclefishleong@gmail.com
- * @LastEditTime: 2024-04-10 00:36:14
+ * @LastEditTime: 2024-04-11 22:15:14
  * @FilePath: \vue_shop\src\components\goods\myAdd.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -83,6 +83,14 @@
         </el-tabs>
       </el-form>
     </el-card>
+
+    <!-- 预览图片的弹窗 -->
+    <el-dialog
+      title="图片预览"
+      :visible.sync="previewDialogVisible"
+      width="50%">
+      <img :src="previewPath" alt="图片" class="previewImg">
+    </el-dialog>
   </div>
 </template>
 
@@ -137,7 +145,10 @@ export default {
       uploadURL: 'http://127.0.0.1:8888/api/private/v1/upload',
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')
-      }
+      },
+      // 预览图片的路径
+      previewPath: '',
+      previewDialogVisible: false
     }
   },
   created () {
@@ -208,7 +219,10 @@ export default {
       }
     },
     // 处理图片预览效果
-    handlePreview() {},
+    handlePreview(file) {
+      this.previewPath = file.response.data.url
+      this.previewDialogVisible = true
+    },
     // 处理移除图片的操作
     handleRemove(file) {
       const filePath = file.response.data.tmp_path
@@ -232,5 +246,8 @@ export default {
 /* Component CSS goes here */
 .el-checkbox {
   margin: 0 5px 0 0 !important;
+}
+.previewImg {
+  width: 100%;
 }
 </style>
