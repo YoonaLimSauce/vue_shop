@@ -1,29 +1,9 @@
-import { init } from "snabbdom/init";
-import { classModule } from "snabbdom/modules/class";
-import { propsModule } from "snabbdom/modules/props";
-import { styleModule } from "snabbdom/modules/style";
-import { eventListenersModule } from "snabbdom/modules/eventlisteners";
-import { h } from "snabbdom/h";
+import h from './mysnabbdom/h';
 
-const patch = init([
-  classModule,
-  propsModule,
-  styleModule,
-  eventListenersModule,
-]);
-
-const virtualNode1 = h(
-  "a",
-  {
-    props: {
-      href: "https://www.baidu.com",
-      target: "_blank",
-    },
-  },
-  "Hello World"
-);
-console.log(virtualNode1);
-
-const container = document.getElementById("container");
-
-patch(container, virtualNode1);
+var myVnode1 = h('div', {}, [
+  h('p', {}, '哈哈'),
+  h('p', {}, '嘻嘻'),
+  h('p', {}, '呵呵'),
+  h('p', {}, h('span', {}, '嘿嘿'))
+])
+console.log(myVnode1)
