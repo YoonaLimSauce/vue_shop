@@ -1,9 +1,7 @@
 import h from './mysnabbdom/h';
+import patch from './mysnabbdom/patch';
 
-var myVnode1 = h('div', {}, [
-  h('p', {}, '哈哈'),
-  h('p', {}, '嘻嘻'),
-  h('p', {}, '呵呵'),
-  h('p', {}, h('span', {}, '嘿嘿'))
-])
-console.log(myVnode1)
+var myVnode1 = h('div', {}, 'Text test');
+
+const button = document.getElementById('container');
+patch(button, myVnode1);
