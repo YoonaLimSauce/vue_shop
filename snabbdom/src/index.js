@@ -4,7 +4,7 @@ import patch from './mysnabbdom/patch';
 var myVnode1 = h('ul', {}, [
     h('li', {}, 'A'),
     h('li', {}, 'B'),
-    h('li', {}, 'C'),
+    h('li', {}, h('p', {}, 'C')),
     h('li', {}, [
         h('div', {}, [
             h('p', {}, 'D'),
