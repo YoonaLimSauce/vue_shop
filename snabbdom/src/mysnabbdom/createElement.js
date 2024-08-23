@@ -10,6 +10,5 @@ export default function createElement (vnode) {
         }
     }
     vnode.elm = domNode;
-    console.log(vnode);
     return vnode.elm;
 }
