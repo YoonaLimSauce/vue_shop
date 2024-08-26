@@ -1,12 +1,20 @@
 import h from './mysnabbdom/h';
 import patch from './mysnabbdom/patch';
 
-var myVnode1 = h('section', {}, h('p', {}, 'hello world'));
+var myVnode1 = h('section', {}, [
+    h('p', {key: 'A'}, 'A'),
+    h('p', {key: 'B'}, 'B'),
+    h('p', {key: 'C'}, 'C'),
+    h('p', {key: 'D'}, 'D'),
+    h('p', {key: 'E'}, 'E'),
+]);
 
 var myVnode2 = h('section', {}, [
-    h('p', {}, 'A'),
-    h('p', {}, 'B'),
-    h('p', {}, 'C')
+    h('p', {key: 'E'}, 'E'),
+    h('p', {key: 'D'}, 'D'),
+    h('p', {key: 'C'}, 'C'),
+    h('p', {key: 'B'}, 'B'),
+    h('p', {key: 'A'}, 'A'),
 ]);
 
 const div = document.getElementById('app');
