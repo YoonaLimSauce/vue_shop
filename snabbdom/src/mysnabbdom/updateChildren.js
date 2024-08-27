@@ -1,3 +1,4 @@
+import createElement from './createElement.js'
 import patchVnode from './patchVnode.js'
 
 function checkSameVnode(a, b) {
@@ -45,6 +46,21 @@ export default function updateChildren(parentElm, oldCh, newCh) {
             parentElm.insertBefore(oldEndVnode.elm, oldStartVnode.elm)
             oldEndVnode = oldCh[--oldEndIdx]
             newStartVnode = newCh[++newStartIdx]
-        } else { }
+        } else {
+            console.log('不能匹配')
+
+            break
+         }
+    }
+
+    if (newStartIdx <= newEndIdx) {
+        const before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].elm
+        for (; newStartIdx <= newEndIdx; ++newStartIdx) {
+            parentElm.insertBefore(createElement(newCh[newStartIdx]), before)
+        }
+    } else if (oldStartIdx <= oldEndIdx) {
+        for (; oldStartIdx <= oldEndIdx; ++oldStartIdx) {
+            parentElm.removeChild(oldCh[oldStartIdx].elm)
+        }
     }
 }

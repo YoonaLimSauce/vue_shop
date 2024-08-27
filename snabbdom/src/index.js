@@ -7,9 +7,15 @@ var myVnode1 = h('section', {}, [
     h('p', {key: 'C'}, 'C'),
     h('p', {key: 'D'}, 'D'),
     h('p', {key: 'E'}, 'E'),
+    h('p', {key: 'F'}, 'F'),
+    h('p', {key: 'G'}, 'G'),
+    h('p', {key: 'H'}, 'H'),
 ]);
 
 var myVnode2 = h('section', {}, [
+    h('p', {key: 'H'}, 'H'),
+    h('p', {key: 'G'}, 'G'),
+    h('p', {key: 'F'}, 'F'),
     h('p', {key: 'E'}, 'E'),
     h('p', {key: 'D'}, 'D'),
     h('p', {key: 'C'}, 'C'),

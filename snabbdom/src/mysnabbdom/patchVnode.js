@@ -16,5 +16,6 @@ export default function patchVnode(oldVnode, newVnode) {
                 oldVnode.elm.appendChild(childDomNode);
             }
         }
+        newVnode.elm = oldVnode.elm;
     }
 }
